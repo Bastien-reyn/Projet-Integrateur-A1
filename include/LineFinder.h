@@ -8,7 +8,8 @@
 #define signalPinRight 8
 #define signalPinExtremRight 6
 
-typedef enum{
+typedef enum
+{
     ExtremeLeft = -2,
     Left = -1,
     Straight = 0,
@@ -16,16 +17,16 @@ typedef enum{
     ExtremeRight = 2,
     Reverse = 5,
     Error = 42
-}ECatchLine;
+} ECatchLine;
 
-class LineFinder{
-    public:
-        LineFinder();
-        ECatchLine find(void);
-    private:
-        boolean boolRead(int signalPin);
+class LineFinder
+{
+public:
+    LineFinder();
+    ECatchLine find(void);
+
+private:
+    boolean boolRead(int signalPin);
 };
-
-
 
 #endif
