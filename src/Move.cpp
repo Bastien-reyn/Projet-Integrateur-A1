@@ -18,23 +18,31 @@ void Move::motorDriver(void){
 
 switch (lineFinder.find())
 {
-case ExtremeRight:
-   correct += 40;
-  break;
+
 case ExtremeLeft:
    correct -= 40;
   break;
+ case Left:
+   correct += 40;
+  break; 
+
+  case Straight:
+    break;
+
   case Right:
    correct +=10;
   break;
-  case Left:
+  case ExtremeRight:
    correct += 40;
   break;
   case Reverse:
-   correct += 70;
+   correct = 70;
   break;
-default:
-    Serial.println("Erreur return LineFinder::find()");
+  case Error:
+    Serial.println("Exception: there is one exception in LineFinder::find() a case does not fit the conditions");
+  break;
+  default:
+    Serial.println("Error: LineFinder::find() return is not in the enumeration ");
   break;
 }
 

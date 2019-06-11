@@ -3,6 +3,11 @@
 
 #include <Arduino.h>
 
+#define signalPinExtremLeft 2
+#define signalPinLeft 4
+#define signalPinRight 9
+#define signalPinExtremRight 6
+
 typedef enum{
     ExtremeLeft = -2,
     Left = -1,

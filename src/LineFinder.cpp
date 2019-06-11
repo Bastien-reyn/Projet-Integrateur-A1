@@ -1,25 +1,19 @@
 #include "LineFinder.h"
 
-const int signalPinExtremLeft = 2;
-const int signalPinLeft = 4;
-const int signalPinRight = 9; 
-const int signalPinExtremRight = 6;
-
 LineFinder::LineFinder(){ 
   
-  Serial.begin(9600);
+    Serial.begin(9600);
 
-pinMode(signalPinExtremLeft, INPUT);
-pinMode(signalPinLeft, INPUT);
-pinMode(signalPinRight, INPUT);
-pinMode(signalPinExtremRight, INPUT);
-
+    pinMode(signalPinExtremLeft, INPUT);
+    pinMode(signalPinLeft, INPUT);
+    pinMode(signalPinRight, INPUT);
+    pinMode(signalPinExtremRight, INPUT);
 }
 
 ECatchLine LineFinder::find(void){
 
     if( !( boolRead(signalPinExtremLeft) || boolRead(signalPinExtremRight) )  && boolRead(signalPinLeft)  && boolRead(signalPinRight)){
-        Serial.println("No correction");   
+        Serial.println("No correction");
         return (Straight);
     }
     if( boolRead(signalPinRight) && !(boolRead(signalPinExtremLeft) || boolRead(signalPinLeft)  || boolRead(signalPinExtremRight) ) ){
