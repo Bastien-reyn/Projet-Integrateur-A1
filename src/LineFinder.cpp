@@ -49,5 +49,5 @@ ECatchLine LineFinder::find(void)
 
 inline boolean LineFinder::boolRead(int signalPin)
 {
-    (digitalRead(signalPin) == HIGH) ? true : false;
+    return (digitalRead(signalPin) == HIGH) ? true : false;
 }
