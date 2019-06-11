@@ -5,7 +5,7 @@
 
 #define signalPinExtremLeft 2
 #define signalPinLeft 4
-#define signalPinRight 9
+#define signalPinRight 8
 #define signalPinExtremRight 6
 
 typedef enum{
