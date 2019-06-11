@@ -1,7 +1,9 @@
 #include "LineFinder.h"
 
-LineFinder::LineFinder(){ 
-  
+
+LineFinder::LineFinder()
+{
+
     Serial.begin(9600);
 
     pinMode(signalPinExtremLeft, INPUT);
@@ -16,40 +18,37 @@ ECatchLine LineFinder::find(void)
     if (!(boolRead(signalPinExtremLeft) || boolRead(signalPinExtremRight)) && boolRead(signalPinLeft) && boolRead(signalPinRight))
     {
         Serial.println("No correction");
-        return (Straight);
+        return (ECatchLine::Straight);
     }
     if (boolRead(signalPinRight) && !(boolRead(signalPinExtremLeft) || boolRead(signalPinLeft) || boolRead(signalPinExtremRight)))
     {
         Serial.println("Little right correction");
-        return (Right);
+        return (ECatchLine::Right);
     }
     if (boolRead(signalPinLeft) && !(boolRead(signalPinExtremLeft) || boolRead(signalPinRight) || boolRead(signalPinExtremRight)))
     {
         Serial.println("Little left correction");
-        return (Left);
+        return (ECatchLine::Left);
     }
     if (boolRead(signalPinExtremRight))
     {
         Serial.println("Big right correction");
-        return (ExtremeRight);
+        return (ECatchLine::ExtremeRight);
     }
     if (boolRead(signalPinExtremLeft) && !boolRead(signalPinExtremRight))
     {
         Serial.println("Big left correction");
-        return (ExtremeLeft);
+        return (ECatchLine::ExtremeLeft);
     }
     if (!(boolRead(signalPinExtremLeft) && boolRead(signalPinLeft) && boolRead(signalPinRight) && boolRead(signalPinExtremRight)))
     {
         Serial.println("Reverse");
-        return (Reverse);
+        return (ECatchLine::Reverse);
     }
     return (Error);
 }
 
-boolean LineFinder::boolRead(int signalPin)
+inline boolean LineFinder::boolRead(int signalPin)
 {
-    if (HIGH == digitalRead(signalPin))
-        return true;
-
-    return false;
+    (digitalRead(signalPin) == HIGH) ? true : false;
 }
