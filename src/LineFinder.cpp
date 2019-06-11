@@ -3,7 +3,6 @@
 
 LineFinder::LineFinder()
 {
-
     Serial.begin(9600);
 
     pinMode(signalPinExtremLeft, INPUT);
