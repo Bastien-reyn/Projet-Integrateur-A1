@@ -24,9 +24,6 @@ class LineFinder
 public:
     LineFinder();
     ECatchLine find(void);
-
-private:
-    boolean boolRead(int signalPin);
 };
 
 #endif

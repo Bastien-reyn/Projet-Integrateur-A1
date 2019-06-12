@@ -13,41 +13,40 @@ LineFinder::LineFinder()
 
 ECatchLine LineFinder::find(void)
 {
+    bool boolExtremeLeft = (digitalRead(signalPinExtremLeft) == HIGH) ? true : false;
+    bool boolLeft = (digitalRead(signalPinLeft) == HIGH) ? true : false;
+    bool boolRight = (digitalRead(signalPinRight) == HIGH) ? true : false;
+    bool boolExtremeRight = (digitalRead(signalPinExtremRight) == HIGH) ? true : false;
 
-    if (!(boolRead(signalPinExtremLeft) || boolRead(signalPinExtremRight)) && boolRead(signalPinLeft) && boolRead(signalPinRight))
+    if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
     {
         Serial.println("No correction");
         return (ECatchLine::Straight);
     }
-    else if (boolRead(signalPinRight) && !(boolRead(signalPinExtremLeft) || boolRead(signalPinLeft) || boolRead(signalPinExtremRight)))
+    else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
     {
         Serial.println("Little right correction");
         return (ECatchLine::Right);
     }
-    else if (boolRead(signalPinLeft) && !(boolRead(signalPinExtremLeft) || boolRead(signalPinRight) || boolRead(signalPinExtremRight)))
+    else if (boolLeft && !(boolExtremeLeft || boolRight || boolExtremeRight))
     {
         Serial.println("Little left correction");
         return (ECatchLine::Left);
     }
-    else if (boolRead(signalPinExtremRight))
+    else if (boolExtremeRight)
     {
         //Serial.println("Big right correction");
         return (ECatchLine::ExtremeRight);
     }
-    else if (boolRead(signalPinExtremLeft) && !boolRead(signalPinExtremRight))
+    else if (boolExtremeLeft && !boolExtremeRight)
     {
         Serial.println("Big left correction");
         return (ECatchLine::ExtremeLeft);
     }
-    else if (!(boolRead(signalPinExtremLeft) && boolRead(signalPinLeft) && boolRead(signalPinRight) && boolRead(signalPinExtremRight)))
+    else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
         Serial.println("Reverse");
         return (ECatchLine::Reverse);
     }
     return (Error);
-}
-
-inline boolean LineFinder::boolRead(int signalPin)
-{
-    return (digitalRead(signalPin) == HIGH) ? true : false;
 }

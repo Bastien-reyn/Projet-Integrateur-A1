@@ -13,19 +13,19 @@ void setup()
 
   move = new Move();
 
-  move->motorDriver();
+ 
   Serial.print("init ");
   motorSpeedSensor = new MotorSpeedSensor();
 }
 
 void loop()
-{
+{ 
+  Serial.println( millis() - time );
   time = millis();
-  //Serial.println(time);
-
-  
+ 
+ move->motorDriver();
   motorSpeedSensor->update();
-
-  Serial.println(motorSpeedSensor->getSpeed());
+motorSpeedSensor->getSpeed();
+  //Serial.println();
 
 }

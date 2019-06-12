@@ -2,7 +2,7 @@
 #define MOTOR_SPEED_SENSOR
 
 #include <Arduino.h>
-#include <cppQueue.h>
+
 #define STEP_NUMBER 20
 
 class MotorSpeedSensor
