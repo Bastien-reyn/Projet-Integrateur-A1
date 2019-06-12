@@ -20,12 +20,12 @@ void setup()
 
 void loop()
 { 
-  Serial.println( millis() - time );
+  //Serial.println( millis() - time );
   time = millis();
  
- move->motorDriver();
+  move->motorDriver();
+  
   motorSpeedSensor->update();
-motorSpeedSensor->getSpeed();
-  //Serial.println();
+  Serial.println(motorSpeedSensor->getSpeed());
 
 }
