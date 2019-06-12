@@ -21,20 +21,18 @@ void Move::motorDriver(void)
   switch (lineFinder.find())
   {
 
-  case ExtremeLeft:
+  case TurnLeft:
     correct -= 40;
     break;
   case Left:
     correct += 40;
     break;
-
   case Straight:
     break;
-
   case Right:
     correct += 10;
     break;
-  case ExtremeRight:
+  case TurnRight:
     correct += 40;
     break;
   case Reverse:

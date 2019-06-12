@@ -10,11 +10,11 @@
 
 typedef enum
 {
-    ExtremeLeft = -2,
+    TurnLeft = -2,
     Left = -1,
     Straight = 0,
     Right = 1,
-    ExtremeRight = 2,
+    TurnRight = 2,
     Reverse = 5,
     Error = 42
 } ECatchLine;

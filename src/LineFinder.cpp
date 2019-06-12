@@ -35,13 +35,13 @@ ECatchLine LineFinder::find(void)
     }
     else if (boolExtremeRight)
     {
-        //Serial.println("Big right correction");
-        return (ECatchLine::ExtremeRight);
+        Serial.println("Turn right");
+        return (ECatchLine::TurnRight);
     }
     else if (boolExtremeLeft && !boolExtremeRight)
     {
-        Serial.println("Big left correction");
-        return (ECatchLine::ExtremeLeft);
+        Serial.println("Turn left");
+        return (ECatchLine::TurnLeft);
     }
     else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
