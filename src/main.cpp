@@ -1,11 +1,9 @@
 #include <Arduino.h>
 #include "Move.h"
 
-
 unsigned long time;
 
-
-   Move* move;
+Move *move;
 
 /*
   ////////////////////////////////////////////////////////////////////////////speedCapteur
@@ -20,11 +18,12 @@ unsigned long time;
   boolean presence(void);
 */
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
-  
+
   move = new Move();
-/* 
+  /* 
     ////////////////////////////////////////////////////////////////////////////speedCapteur
   pinMode(motorSpeedPin, INPUT);
   for (int n = 0; n < 100; n++)
@@ -33,7 +32,8 @@ void setup() {
   Serial.print("init ");
 }
 
-void loop() {
+void loop()
+{
 
   time = millis();
   //Serial.println(time);
@@ -43,13 +43,12 @@ void loop() {
     Serial.print( speed() );
     Serial.println(" m/s");
   */
-  
+
   move->motorDriver();
 
-  while ( (millis() - time) < 10);
-
+  while ((millis() - time) < 10)
+    ;
 }
-
 
 /*
   ////////////////////////////////////////////////////////////////////////////speedCapteur
