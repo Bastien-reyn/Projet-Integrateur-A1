@@ -53,7 +53,8 @@ void Move::motorDriver(void)
     correct = 70;
   }
 
-  motorDriverMove((70 + correct), (70 - correct));
+  //motorDriverMove((70 + correct), (70 - correct));
+  motorDriverMove((100), (100));
 }
 
 void Move::motorDriverMove(int left, int right)
