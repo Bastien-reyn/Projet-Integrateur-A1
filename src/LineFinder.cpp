@@ -19,32 +19,44 @@ ECatchLine LineFinder::find(void)
 
     if (boolExtremeLeft && !boolExtremeRight)
     {
+        #ifdef DEBUG
         Serial.println("Turn left");
+        #endif
         return (ECatchLine::TurnLeft);
     }
     else if (boolExtremeRight)
     {
+        #ifdef DEBUG
         Serial.println("Turn right");
+        #endif
         return (ECatchLine::TurnRight);
     }
     else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
     {
+        #ifdef DEBUG
         Serial.println("Little right correction");
+        #endif
         return (ECatchLine::Right);
     }
     else if (boolLeft && !(boolExtremeLeft || boolRight || boolExtremeRight))
     {
+        #ifdef DEBUG
         Serial.println("Little left correction");
+        #endif
         return (ECatchLine::Left);
     }
     else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
+        #ifdef DEBUG
         Serial.println("Reverse");
+        #endif
         return (ECatchLine::Reverse);
     }
     else if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
     {
+        #ifdef DEBUG
         Serial.println("No correction");
+        #endif
         return (ECatchLine::Straight);
     }
     return (Error);
