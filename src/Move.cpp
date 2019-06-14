@@ -25,7 +25,7 @@ void Move::motorDriver(void)
     correct -= 40;
     break;
   case Left:
-    correct -= 40;
+    correct -= 10;
     break;
   case Straight:
     break;
@@ -36,7 +36,7 @@ void Move::motorDriver(void)
     correct += 40;
     break;
   case Reverse:
-    correct = 70;
+    //correct = 70;
     break;
   case Error:
     Serial.println("Exception: there is one exception in LineFinder::find() a case does not fit the conditions");
@@ -46,9 +46,13 @@ void Move::motorDriver(void)
     break;
   }
 
-  if (correct > 70 || correct < -70)
+  if (correct > 70)
   {
     correct = 70;
+  }
+  else if (correct < -70)
+  {
+    correct = -70;
   }
 
   motorDriverMove((70 + correct), (70 - correct));
