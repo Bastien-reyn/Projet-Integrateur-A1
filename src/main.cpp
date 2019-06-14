@@ -28,7 +28,8 @@ void setup()
 
 void loop()
 { 
-  //Serial.println( millis() - time );
+  Serial.print("Duree Boucle :");
+  Serial.println( millis() - time );
   time = millis();
  
   move->motorDriver();
