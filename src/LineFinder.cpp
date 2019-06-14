@@ -1,6 +1,5 @@
 #include "LineFinder.h"
 
-
 LineFinder::LineFinder()
 {
     Serial.begin(9600);
