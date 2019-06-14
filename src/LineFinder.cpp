@@ -1,6 +1,7 @@
 #include "LineFinder.h"
 
-LineFinder::LineFinder()
+// Cette fonction va initialiser les pins de l'Arduino
+LineFinder::LineFinder() 
 {
     Serial.begin(9600);
 
@@ -10,7 +11,8 @@ LineFinder::LineFinder()
     pinMode(signalPinExtremRight, INPUT);
 }
 
-ECatchLine LineFinder::find(void)
+// Cette fonction va récupérer les entrées des capteurs suiveurs de ligne 
+ECatchLine LineFinder::find(void) 
 {
     bool boolExtremeLeft = (digitalRead(signalPinExtremLeft) == HIGH) ? true : false;
     bool boolLeft = (digitalRead(signalPinLeft) == HIGH) ? true : false;

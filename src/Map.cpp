@@ -10,6 +10,7 @@ int posy[30];
 int fposx[30];
 int fposy[30];
 
+// Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
 bool mapI[9][11] =
     {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -22,11 +23,13 @@ bool mapI[9][11] =
         {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
+// On va créer la map à l'aide de la fonction "setTravel"
 Map::Map()
 {
     Serial.begin(9600);
     Map::setTravel();
 }
+// On va récupérer la map
 void Map::getTravel(void)
 {
     for(int n = 0; n < nmax + 2; n++)
