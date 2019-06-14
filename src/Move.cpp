@@ -25,7 +25,7 @@ void Move::motorDriver(void)
     correct -= 40;
     break;
   case Left:
-    correct += 40;
+    correct -= 40;
     break;
   case Straight:
     break;
