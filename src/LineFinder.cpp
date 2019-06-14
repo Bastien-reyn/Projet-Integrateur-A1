@@ -17,10 +17,15 @@ ECatchLine LineFinder::find(void)
     bool boolRight = (digitalRead(signalPinRight) == HIGH) ? true : false;
     bool boolExtremeRight = (digitalRead(signalPinExtremRight) == HIGH) ? true : false;
 
-    if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
+    if (boolExtremeLeft && !boolExtremeRight)
     {
-        Serial.println("No correction");
-        return (ECatchLine::Straight);
+        Serial.println("Turn left");
+        return (ECatchLine::TurnLeft);
+    }
+    else if (boolExtremeRight)
+    {
+        Serial.println("Turn right");
+        return (ECatchLine::TurnRight);
     }
     else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
     {
@@ -32,20 +37,15 @@ ECatchLine LineFinder::find(void)
         Serial.println("Little left correction");
         return (ECatchLine::Left);
     }
-    else if (boolExtremeRight)
-    {
-        Serial.println("Turn right");
-        return (ECatchLine::TurnRight);
-    }
-    else if (boolExtremeLeft && !boolExtremeRight)
-    {
-        Serial.println("Turn left");
-        return (ECatchLine::TurnLeft);
-    }
     else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
         Serial.println("Reverse");
         return (ECatchLine::Reverse);
+    }
+    else if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
+    {
+        Serial.println("No correction");
+        return (ECatchLine::Straight);
     }
     return (Error);
 }
