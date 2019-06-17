@@ -16,7 +16,7 @@ typedef enum
     Right = 1,
     TurnRight = 2,
     Reverse = 5,
-    LeftOrRight = 69;
+    LeftOrRight = 69,
     Error = 42
 } ECatchLine;
 

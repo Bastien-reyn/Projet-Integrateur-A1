@@ -1,11 +1,12 @@
 #include <Arduino.h>
-#include "Move.h"
+#include "Robot.h"
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 
 unsigned long time = 0;
 
-Move *move;
+Robot *robot;
+LineFinder* lineFinder;
 MotorSpeedSensor* motorSpeedSensor;
 Map *theMap;
 
@@ -21,7 +22,9 @@ void setup()
   theMap->getTravel();
   delay(10000);
 
-  move = new Move();
+  robot = new Robot();
+  lineFinder = new LineFinder();
+
 
   Serial.print("init ");
   motorSpeedSensor = new MotorSpeedSensor();
@@ -34,7 +37,7 @@ void loop()
   Serial.println( millis() - time );
   time = millis();
  
-  move->motorDriver();
+  robot->followLine(lineFinder->find());
   
   motorSpeedSensor->update();
   Serial.println(motorSpeedSensor->getSpeed());
