@@ -8,7 +8,7 @@ const int PinSender = -1;
 class RadioSender
 {
     RadioSender();
-    void RadioSender::Send(const char *Message);
+    void Send(const char *Message);
 };
 
 #endif

@@ -8,7 +8,7 @@ const int PinReciever = -1;
 
 class RadioReciever
 {
-    void RadioReciever::Recieve();
+    void Recieve();
     RadioReciever();
 };
 
