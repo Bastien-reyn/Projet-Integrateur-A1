@@ -10,6 +10,17 @@ vw_setup(2000);
 
 void RadioSender::Send(const char *Message)
 {
-    vw_send((uint8_t *)Message, strlen(Message));
+    //On crée un paquet
+    //byte package[20];
+
+    //On copie dans le paquet le message
+    //strcpy(package, Message);
+
+    //On commence l'envoi du paquet / message
+    //vw_send(paquet, 20);
+     vw_send((uint8_t *)Message, strlen(Message));
+
+    //Cette fonction va bloquer le programme jusqu'a ce que l'envoi soit bien terminé 
+    //vw_wait_tx();
 }
 
