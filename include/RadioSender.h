@@ -5,4 +5,10 @@
 #include <VirtualWire.h>
 const int PinSender = -1;
 
+class RadioSender
+{
+    RadioSender();
+    void RadioSender::Send(const char *Message);
+};
+
 #endif
