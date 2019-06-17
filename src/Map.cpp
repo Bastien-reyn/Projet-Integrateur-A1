@@ -4,28 +4,24 @@ int xd = 6;
 int yd = 4;
 int nmax = 30;
 
-int posx[30];
-int posy[30];
-
-int fposx[30];
-int fposy[30];
 
 // Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
-bool mapI[9][11] =
-    {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-        {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 // On va créer la map à l'aide de la fonction "setTravel"
-Map::Map()
+Map::Map() : mapI{
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+            {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}
 {
+    xd = 6;
+    yd = 4;
+    nmax = 30;
     //Serial.begin(9600);
     Map::setTravel();
 }
@@ -49,7 +45,7 @@ void Map::setTravel(void)
             Serial.print(((mapI[x][y]) ? "1 " : "0 "));
             Serial.println("");
     }
-    while (Map::creatTravel(0, 2, 2, 2, 2))
+    while (createTravel(0, 2, 2, 2, 2))
     {
         for (int n = 0; n < nmax + 1; n++)
         {
@@ -65,7 +61,8 @@ void Map::setTravel(void)
         nmax--;
     }
 }
-bool Map::creatTravel(int n, int xp, int yp, int x, int y)
+
+bool Map::createTravel(int n, int xp, int yp, int x, int y)
 {
     if (x == xd && y == yd && n < nmax)
     {
@@ -87,7 +84,7 @@ bool Map::creatTravel(int n, int xp, int yp, int x, int y)
         {
             if (mapI[x][y - 1])
             {
-                if (Map::creatTravel(n + 1, x, y, x, y - 1))
+                if (Map::createTravel(n + 1, x, y, x, y - 1))
                 {
                     posx[n] = x;
                    // Serial.print("x :");
@@ -106,7 +103,7 @@ bool Map::creatTravel(int n, int xp, int yp, int x, int y)
         {
             if (mapI[x][y + 1])
             {
-                if (Map::creatTravel(n + 1, x, y, x, y + 1))
+                if (Map::createTravel(n + 1, x, y, x, y + 1))
                 {
                     posx[n] = x;
                     // Serial.print("x :");
@@ -125,7 +122,7 @@ bool Map::creatTravel(int n, int xp, int yp, int x, int y)
         {
             if (mapI[x - 1][y])
             {
-                if (Map::creatTravel(n + 1, x, y, x - 1, y))
+                if (Map::createTravel(n + 1, x, y, x - 1, y))
                 {
                     posx[n] = x;
                     // Serial.print("x :");
@@ -144,7 +141,7 @@ bool Map::creatTravel(int n, int xp, int yp, int x, int y)
         {
             if (mapI[x + 1][y])
             {
-                if (Map::creatTravel(n + 1, x, y, x + 1, y))
+                if (Map::createTravel(n + 1, x, y, x + 1, y))
                 {
                     posx[n] = x;
                     // Serial.print("x :");
