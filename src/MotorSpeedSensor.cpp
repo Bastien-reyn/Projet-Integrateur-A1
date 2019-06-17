@@ -2,8 +2,18 @@
 
 const int motorSpeedPin = 3;
 
-
 MotorSpeedSensor::MotorSpeedSensor()
+{
+    init();
+}
+
+MotorSpeedSensor::MotorSpeedSensor(void(*updater) (void))
+{
+    init();
+    attachInterrupt(digitalPinToInterrupt(motorSpeedPin), updater, CHANGE);
+}
+
+void MotorSpeedSensor::init()
 {
     //pinMode(motorSpeedPin, INPUT);
     previousState = actualState();
@@ -18,20 +28,19 @@ MotorSpeedSensor::MotorSpeedSensor()
 void MotorSpeedSensor::update()
 {
     intervals[0] = millis() - timeAtPreviousState;
-    if (actualState() != previousState)
-    {
-        //Decalage de tous les intervales
-        for (int n = 20; n > 0; n--){
-            intervals[n] = intervals[n - 1];
-        }
-        previousState = actualState();
-        timeAtPreviousState = millis();
+    //Decalage de tous les intervales
+    for (int n = 20; n > 0; n--){
+        intervals[n] = intervals[n - 1];
     }
+    previousState = actualState();
+    timeAtPreviousState = millis();
+    
     
 }
 
 double MotorSpeedSensor::getSpeed()
 {
+    intervals[0] = millis() - timeAtPreviousState;
     double sum = 0.0;
     for(int i = 0; i < 20; i++)
     {
@@ -42,8 +51,16 @@ double MotorSpeedSensor::getSpeed()
    //Serial.print("sum :");
    //Serial.println(sum);
     //return  (sum);
-
-     return ((( 3.14 * 0.065) / 40.0) / sum) ;
+    if (intervals[0] > 200)
+    {
+        return 0.00;
+    }
+    else
+    {
+        return ((( 3.14 * 0.065) / 40.0) / sum) ;
+    }
+    
+    
 
 }
 

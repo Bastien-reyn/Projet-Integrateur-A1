@@ -10,11 +10,14 @@ class MotorSpeedSensor
 private:
     boolean previousState;
     unsigned long timeAtPreviousState;
-
+    void init();
     int* intervals;
+    MotorSpeedSensor();
 
 public:
-    MotorSpeedSensor();
+
+    MotorSpeedSensor(void(*)());
+    
     boolean actualState();
     void update();
     double getSpeed();

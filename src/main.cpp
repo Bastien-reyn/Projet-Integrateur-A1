@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 
+void updateMotorSpeedSensorRight();
+
 unsigned long time = 0;
 
 Robot *robot;
@@ -20,26 +22,33 @@ void setup()
   Serial.println("");
   Serial.println(millis() - time);
   theMap->getTravel();
-  delay(10000);
+  delay(1000);
 
   robot = new Robot();
   lineFinder = new LineFinder();
 
 
   Serial.print("init ");
-  motorSpeedSensor = new MotorSpeedSensor();
+  motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
 }
 
 // La loop de l'Arduino
 void loop()
 { 
+  #ifdef DEBUG
   Serial.print("Duree Boucle :");
   Serial.println( millis() - time );
   time = millis();
- 
+ #endif
+  Serial.println(motorSpeedSensor->getSpeed());
   robot->followLine(lineFinder->find());
   
-  motorSpeedSensor->update();
-  Serial.println(motorSpeedSensor->getSpeed());
 
+}
+
+
+//update function for the attachInterrupt function of the MotorSpeedSensor
+void updateMotorSpeedSensorRight()
+{
+  motorSpeedSensor->update();
 }
