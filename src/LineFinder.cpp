@@ -2,7 +2,7 @@
 
 LineFinder::LineFinder()
 {
-    Serial.begin(9600);
+    //Serial.begin(9600);
 
     pinMode(signalPinExtremLeft, INPUT);
     pinMode(signalPinLeft, INPUT);
@@ -20,35 +20,42 @@ ECatchLine LineFinder::find(void)
     if (boolExtremeLeft && !boolExtremeRight)
     {
         #ifdef DEBUG
-        Serial.println("Turn left");
+            Serial.println("Turn left");
         #endif
         return (ECatchLine::TurnLeft);
+    }
+    else if (boolExtremeLeft && boolExtremeRight)
+    {
+        #ifdef DEBUG
+            Serial.println("Turn left");
+        #endif
+        return (ECatchLine::LeftOrRight);
     }
     else if (boolExtremeRight)
     {
         #ifdef DEBUG
-        Serial.println("Turn right");
+            Serial.println("Turn right");
         #endif
         return (ECatchLine::TurnRight);
     }
     else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
     {
         #ifdef DEBUG
-        Serial.println("Little right correction");
+            Serial.println("Little right correction");
         #endif
         return (ECatchLine::Right);
     }
     else if (boolLeft && !(boolExtremeLeft || boolRight || boolExtremeRight))
     {
         #ifdef DEBUG
-        Serial.println("Little left correction");
+            Serial.println("Little left correction");
         #endif
         return (ECatchLine::Left);
     }
     else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
         #ifdef DEBUG
-        Serial.println("Reverse");
+            Serial.println("Reverse");
         #endif
         return (ECatchLine::Reverse);
     }

@@ -24,7 +24,7 @@ bool mapI[9][11] =
 
 Map::Map()
 {
-    Serial.begin(9600);
+    //Serial.begin(9600);
     Map::setTravel();
 }
 void Map::getTravel(void)

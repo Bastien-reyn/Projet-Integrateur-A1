@@ -1,5 +1,4 @@
 #include "Move.h"
-#include "LineFinder.h"
 
 #define I2C_ADDRESS 0x0f
 
@@ -10,35 +9,35 @@ LineFinder lineFinder;
 Move::Move()
 {
 
-  Serial.begin(9600);
+ // Serial.begin(9600);
 
   Serial.println(Motor.begin(I2C_ADDRESS));
 }
 
-void Move::motorDriver(void)
+void Move::motorDriver(ECatchLine state)
 {
 
-  switch (lineFinder.find())
+  switch (state)
   {
 
-  case TurnLeft:
+  case ECatchLine::TurnLeft:
     correct -= 40;
     break;
-  case Left:
+  case ECatchLine::Left:
     correct -= 10;
     break;
-  case Straight:
+  case ECatchLine::Straight:
     break;
-  case Right:
+  case ECatchLine::Right:
     correct += 10;
     break;
-  case TurnRight:
+  case ECatchLine::TurnRight:
     correct += 40;
     break;
-  case Reverse:
+  case ECatchLine::Reverse:
     //correct = 70;
     break;
-  case Error:
+  case ECatchLine::Error:
     Serial.println("Exception: there is one exception in LineFinder::find() a case does not fit the conditions");
     break;
   default:
