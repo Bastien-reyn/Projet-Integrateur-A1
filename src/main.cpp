@@ -9,6 +9,7 @@ Move *move;
 MotorSpeedSensor* motorSpeedSensor;
 Map *theMap;
 
+// La fonction setup de l'Arduino
 void setup()
 {
   Serial.begin(9600);
@@ -26,6 +27,7 @@ void setup()
   motorSpeedSensor = new MotorSpeedSensor();
 }
 
+// La loop de l'Arduino
 void loop()
 { 
   Serial.print("Duree Boucle :");
