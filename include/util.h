@@ -3,7 +3,7 @@
 
 
 
-#define RELEASE
+#define DEBUG
 
 
 #endif

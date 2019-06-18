@@ -1,5 +1,4 @@
 #include "RadioSender.h"
-
 RadioSender::RadioSender()
 {
 //Mise en place du pin de transmission
@@ -8,7 +7,7 @@ vw_set_tx_pin(PinSender);
 vw_setup(2000);
 }
 
-void RadioSender::Send(const char *Message)
+void RadioSender::Send(char *Message)
 {
     //On crée un paquet
     //byte package[20];
@@ -17,7 +16,7 @@ void RadioSender::Send(const char *Message)
     //strcpy(package, Message);
 
     //On convertit crypte le message en AES
-    uint8_t key[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}; // La clé de cryptage AES
+    uint8_t key[] = {}; // La clé de cryptage AES
     aes128_enc_single(key, Message); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
     #ifdef DEBUG
     Serial.print("données cryptées");
