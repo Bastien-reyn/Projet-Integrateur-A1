@@ -18,6 +18,12 @@ ECatchLine LineFinder::find(void)
     bool boolLeft = (digitalRead(signalPinLeft) == HIGH) ? true : false;
     bool boolRight = (digitalRead(signalPinRight) == HIGH) ? true : false;
     bool boolExtremeRight = (digitalRead(signalPinExtremRight) == HIGH) ? true : false;
+    #ifdef DEBUG
+    Serial.print(boolExtremeLeft);
+    Serial.print(boolLeft);
+    Serial.print(boolRight);
+    Serial.println(boolExtremeRight);
+    #endif
 
     if (boolExtremeLeft && !boolExtremeRight)
     {
@@ -53,19 +59,20 @@ ECatchLine LineFinder::find(void)
         #endif
         actualState = ECatchLine::Left;
     }
+    else if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
+    {
+        #ifdef DEBUG
+            Serial.println("No correction");
+        #endif
+        actualState = ECatchLine::Straight;
+    }
     else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
     {
         #ifdef DEBUG
             Serial.println("Reverse");
         #endif
     }
-    else if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
-    {
-        #ifdef DEBUG
-        Serial.println("No correction");
-        #endif
-        actualState = ECatchLine::Straight;
-    }
+    
     return (actualState);
 }
 

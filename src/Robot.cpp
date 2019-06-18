@@ -5,7 +5,6 @@
 Robot::Robot()
 {
 	_correct = 0;
-	lineFinder = new LineFinder();
 	// Serial.begin(9600);
 	lastCorrectionTime = millis();
 	Serial.println(Motor.begin(I2C_ADDRESS));
@@ -23,7 +22,7 @@ ERobotState Robot::followLine(ECatchLine state)
 		returnState = ERobotState::LEFT_TURN;
 		break;
 	case ECatchLine::Left:
-		_correct = -30;
+		_correct = -20;
 
 		break;
 	case ECatchLine::Straight:
@@ -38,7 +37,7 @@ ERobotState Robot::followLine(ECatchLine state)
 		_correct = 0;
 		break;
 	case ECatchLine::Right:
-		_correct = 30;
+		_correct = 20;
 		break;
 	case ECatchLine::TurnRight:
 		_correct = 70;
@@ -75,6 +74,26 @@ ERobotState Robot::followLine(ECatchLine state)
 	return returnState;
 }
 
+
+ERobotState Robot::takeTurn(ERobotState state){
+	int left = 0;
+	int right = 0;
+	if (state == ERobotState::LEFT_TURN)
+	{
+		left = 100;
+	}
+	else if (state == ERobotState::RIGHT_TURN)
+	{
+		right = 100;
+	}
+	while (lineFinder->find() != ECatchLine::Straight)
+	{
+		motorDriverMove((left), (right));
+	}
+	
+	return ERobotState::FOLLOWING;
+}
+
 void Robot::motorDriverMove(int left, int right)
 {
 	Motor.speed(MOTOR1, left);
@@ -83,13 +102,13 @@ void Robot::motorDriverMove(int left, int right)
 
 void Robot::correct(int correction)
 {
-	if (lastCorrectionTime - millis() >= 50)
+	if (millis() - lastCorrectionTime >= 50)
 	{
 		lastCorrectionTime = millis();
 		_correct += correction;
 	}
 #ifdef DEBUG
-	if (lastCorrectionTime - millis() > 200)
+	if (millis() - lastCorrectionTime > 200)
 	{
 		Serial.print("	Correction trop longue.");
 	}

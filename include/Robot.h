@@ -24,6 +24,7 @@ public:
     Robot();
     void correct(int correction);
     ERobotState followLine(ECatchLine);
+    ERobotState takeTurn(ERobotState state);
     void motorDriverMove(int left, int right);
 };
 

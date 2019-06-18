@@ -13,6 +13,10 @@ LineFinder* lineFinder;
 MotorSpeedSensor* motorSpeedSensor;
 Map *theMap;
 RadioSender* sender;
+ERobotState state;
+  int left = 0;
+	int right = 0;
+  unsigned long lastTurn = 0;
 
 // La fonction setup de l'Arduino
 void setup()
@@ -44,9 +48,28 @@ void loop()
   time = millis();
  #endif
   sender->send(String(motorSpeedSensor->getSpeed()).c_str());
-  robot->followLine(lineFinder->find());
-  
+  state = robot->followLine(lineFinder->find());
 
+  if(state != ERobotState::FOLLOWING && state != LEFT_AND_RIGHT_TURN && millis() - lastTurn >= 500){
+    lastTurn = millis();
+    if (state == ERobotState::LEFT_TURN)
+    {
+      right = 70;
+      left = -10;
+    }
+    else if (state == ERobotState::RIGHT_TURN)
+    {
+      left = 70;
+      right = -10;
+    }
+    robot->motorDriverMove((left), (right));
+    delay(150);
+    while (lineFinder->find() != ECatchLine::Straight)
+    {
+      robot->motorDriverMove((left), (right));
+    }
+    state = FOLLOWING;
+  }
 }
 
 

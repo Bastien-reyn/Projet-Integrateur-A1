@@ -2,6 +2,7 @@
 #define _LINEFINDER_H
 
 #include <Arduino.h>
+#include "util.h"
 
 #define signalPinExtremLeft 2
 #define signalPinLeft 4
