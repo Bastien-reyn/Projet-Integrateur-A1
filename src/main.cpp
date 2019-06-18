@@ -26,7 +26,8 @@ void setup()
 // La loop de l'Arduino
 void loop()
 { 
-  radiosender->Send("bonjour");
+  String oui = "salut";
+  radiosender->Send(oui.c_str(), oui.length());
   Serial.println(" Fin");
   delay(1000);
 }
