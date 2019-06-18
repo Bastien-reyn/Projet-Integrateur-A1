@@ -1,4 +1,5 @@
 #include "RadioSender.h"
+#define DEBUG
 
 RadioSender::RadioSender()
 {
@@ -18,10 +19,10 @@ void RadioSender::Send(const char *Message)
 
     //On convertit crypte le message en AES
     uint8_t key[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}; // La clé de cryptage AES
-    aes128_enc_single(key, Message); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
+    aes128_enc_single(key, "salut"); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
     #ifdef DEBUG
     Serial.print("données cryptées");
-    Serial.println(data);
+    Serial.println(Message);
     #endif
 
 
@@ -30,6 +31,7 @@ void RadioSender::Send(const char *Message)
      vw_send((uint8_t *)Message, strlen(Message));
 
     //Cette fonction va bloquer le programme jusqu'a ce que l'envoi soit bien terminé 
-    //vw_wait_tx();
+    vw_wait_tx();
+    Serial.print("Envoye");
 }
 

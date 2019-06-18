@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 #include "RadioReciever.h"
+#include "RadioSender.h"
 
 unsigned long time = 0;
 
@@ -11,22 +12,21 @@ LineFinder* lineFinder;
 MotorSpeedSensor* motorSpeedSensor;
 Map *theMap;
 RadioReciever *radiorecieve;
+RadioSender *radiosender;
 
 // La fonction setup de l'Arduino
 void setup()
 {
    Serial.begin(9600);
 
-  radiorecieve = new RadioReciever();
+  radiosender = new RadioSender();
   Serial.print("init");
 }
 
 // La loop de l'Arduino
 void loop()
 { 
-
-  radiorecieve->Recieve();
-  delay(100);
-  Serial.print("Fin");
-
+  radiosender->Send("bonjour");
+  Serial.println(" Fin");
+  delay(1000);
 }
