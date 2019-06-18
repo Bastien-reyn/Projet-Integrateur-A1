@@ -3,13 +3,13 @@
 #include <AESLib.h>
 #include <Arduino.h>
 #include <VirtualWire.h>
-const int PinSender = 7;
+const int PinSender = 6;
 
 class RadioSender
 {
 public:
     RadioSender();
-    void Send( char *Message);
+    void Send( char *Message, int lenght);
 };
 
 #endif
