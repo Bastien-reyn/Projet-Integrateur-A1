@@ -8,7 +8,7 @@ vw_set_tx_pin(PinSender);
 vw_setup(2000);
 }
 
-void RadioSender::Send(const char *Message)
+void RadioSender::send(const char *Message)
 {
     vw_send((uint8_t *)Message, strlen(Message));
 }

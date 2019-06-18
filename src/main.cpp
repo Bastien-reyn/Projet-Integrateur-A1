@@ -2,6 +2,7 @@
 #include "Robot.h"
 #include "Map.h"
 #include "MotorSpeedSensor.h"
+#include "RadioSender.h"
 
 void updateMotorSpeedSensorRight();
 
@@ -11,6 +12,7 @@ Robot *robot;
 LineFinder* lineFinder;
 MotorSpeedSensor* motorSpeedSensor;
 Map *theMap;
+RadioSender* sender;
 
 // La fonction setup de l'Arduino
 void setup()
@@ -30,6 +32,7 @@ void setup()
 
   Serial.print("init ");
   motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
+  sender = new RadioSender();
 }
 
 // La loop de l'Arduino
@@ -40,7 +43,7 @@ void loop()
   Serial.println( millis() - time );
   time = millis();
  #endif
-  Serial.println(motorSpeedSensor->getSpeed());
+  sender->send(String(motorSpeedSensor->getSpeed()).c_str());
   robot->followLine(lineFinder->find());
   
 

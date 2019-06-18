@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include <VirtualWire.h>
-const int PinSender = -1;
+const int PinSender = 7;
 
 class RadioSender
 {
+public:
     RadioSender();
-    void Send(const char *Message);
+    void send(const char *Message);
 };
 
 #endif
