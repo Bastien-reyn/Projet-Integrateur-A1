@@ -16,6 +16,15 @@ void RadioSender::Send(const char *Message)
     //On copie dans le paquet le message
     //strcpy(package, Message);
 
+    //On convertit crypte le message en AES
+    uint8_t key[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}; // La clé de cryptage AES
+    aes128_enc_single(key, Message); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
+    #ifdef DEBUG
+    Serial.print("données cryptées");
+    Serial.println(data);
+    #endif
+
+
     //On commence l'envoi du paquet / message
     //vw_send(paquet, 20);
      vw_send((uint8_t *)Message, strlen(Message));

@@ -14,6 +14,7 @@ Robot::Robot()
 
 ERobotState Robot::followLine(ECatchLine state)
 {
+	long unsigned int t1 = millis();
 	ERobotState returnState = ERobotState::FOLLOWING;
 
 	switch (state)
@@ -61,8 +62,8 @@ ERobotState Robot::followLine(ECatchLine state)
 	{
 		_correct = -70;
 	}
-
 	motorDriverMove((70 + _correct), (70 - _correct));
+	if (millis()<t1+20)
 	return returnState;
 }
 
