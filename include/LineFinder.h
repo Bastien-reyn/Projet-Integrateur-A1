@@ -25,6 +25,8 @@ class LineFinder
 public:
     LineFinder();
     ECatchLine find(void);
+private:
+    ECatchLine actualState;
 };
 
 #endif

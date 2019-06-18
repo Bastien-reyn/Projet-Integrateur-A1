@@ -19,8 +19,10 @@ class Robot
 private:
     int _correct;
     LineFinder* lineFinder;
+    unsigned long lastCorrectionTime;
 public:
     Robot();
+    void correct(int correction);
     ERobotState followLine(ECatchLine);
     void motorDriverMove(int left, int right);
 };
