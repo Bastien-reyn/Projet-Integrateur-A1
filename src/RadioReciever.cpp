@@ -15,7 +15,7 @@ void RadioReciever::Recieve()
 {
     uint8_t buf[VW_MAX_MESSAGE_LEN];
     uint8_t buflen = VW_MAX_MESSAGE_LEN;
-    if (vw_get_message(buf, &buflen))
+    if (vw_get_message(buf, &buflen)) //Renvoie "true" si le message reçu est correct
     {
         int i;
         Serial.print("Got: ");
@@ -25,4 +25,10 @@ void RadioReciever::Recieve()
           Serial.print(" ");
         }
     }
+    else
+    {
+      // On retourne le nombre de messages reçus incomplets
+      vw_get_rx_bad();
+    }
+    
 }
