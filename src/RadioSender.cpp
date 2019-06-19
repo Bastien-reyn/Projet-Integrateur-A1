@@ -39,7 +39,6 @@ void RadioSender::Send( char *Message, int lenght)
     {
         Serial.print(mts[i], HEX);
         Serial.print(" ");
-
     }
     //On commence l'envoi du paquet / message
     //vw_send(paquet, 20);
