@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <VirtualWire.h>
 
-const int PinReciever = 3;
+const int PinReciever = 6;
 
 class RadioReciever
 {

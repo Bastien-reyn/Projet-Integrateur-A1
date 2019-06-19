@@ -23,7 +23,7 @@ void RadioReciever::Recieve()
         for(i = 0; i < buflen; i++)
         {
           //Serial.print(buf[i], HEX);  Initialement buf était de type uint8_t
-          Serial.print(buf[i], HEX);
+          Serial.print(buf[i]);
           Serial.print(" ");
         }
           Serial.println(" ");
