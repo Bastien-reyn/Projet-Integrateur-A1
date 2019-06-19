@@ -52,9 +52,10 @@ void loop()
         state = robot->followLine(lineFinder->find());
         //}
 
-    if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 300)
+    if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 150)
     {
         state = robot->takeTurn(state);
+        lastTurn = millis();
     }
     /*
     robot->followCenterLinePID(lineFinder->findCenter());
