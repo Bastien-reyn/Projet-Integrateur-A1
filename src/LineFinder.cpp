@@ -37,6 +37,7 @@ ECatchLine LineFinder::find(void)
         #ifdef DEBUG
             Serial.println("Turn left");
         #endif
+
     }
     else if (boolExtremeRight)
     {
@@ -44,6 +45,70 @@ ECatchLine LineFinder::find(void)
             Serial.println("Turn right");
         #endif
         actualState = ECatchLine::TurnRight;
+    }
+    else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
+    {
+        #ifdef DEBUG
+            Serial.println("Little right correction");
+        #endif
+        actualState = ECatchLine::Right;
+    }
+    else if (boolLeft && !(boolExtremeLeft || boolRight || boolExtremeRight))
+    {
+        #ifdef DEBUG
+            Serial.println("Little left correction");
+        #endif
+        actualState = ECatchLine::Left;
+    }
+    else if (!(boolExtremeLeft || boolExtremeRight) && boolLeft && boolRight)
+    {
+        #ifdef DEBUG
+            Serial.println("No correction");
+        #endif
+        actualState = ECatchLine::Straight;
+    }
+    else if (!(boolExtremeLeft && boolLeft && boolRight && boolExtremeRight))
+    {
+        #ifdef DEBUG
+            Serial.println("Reverse");
+        #endif
+    }
+    
+    
+    return (actualState);
+}
+
+ECatchLine LineFinder::findCenter()
+{
+    bool boolExtremeLeft = (digitalRead(signalPinExtremLeft) == HIGH) ? true : false;
+    bool boolLeft = (digitalRead(signalPinLeft) == HIGH) ? true : false;
+    bool boolRight = (digitalRead(signalPinRight) == HIGH) ? true : false;
+    bool boolExtremeRight = (digitalRead(signalPinExtremRight) == HIGH) ? true : false;
+    #ifdef DEBUG
+    Serial.print(boolExtremeLeft);
+    Serial.print(boolLeft);
+    Serial.print(boolRight);
+    Serial.println(boolExtremeRight);
+    #endif
+
+    if (boolExtremeLeft && !boolExtremeRight)
+    {
+        #ifdef DEBUG
+            Serial.println("Turn left");
+        #endif
+    }
+    else if (boolExtremeLeft && boolExtremeRight)
+    {
+        #ifdef DEBUG
+            Serial.println("Turn left");
+        #endif
+
+    }
+    else if (boolExtremeRight)
+    {
+        #ifdef DEBUG
+            Serial.println("Turn right");
+        #endif
     }
     else if (boolRight && !(boolExtremeLeft || boolLeft || boolExtremeRight))
     {
@@ -134,3 +199,6 @@ ECatchLine LineFinder::find(void)
     }
     return (Error);
 }*/
+
+
+
