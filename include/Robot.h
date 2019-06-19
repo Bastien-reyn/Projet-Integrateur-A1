@@ -17,14 +17,25 @@ typedef enum {
 class Robot
 {
 private:
-    int _correct;
     LineFinder* lineFinder;
+    ECatchLine actualLineState;
     unsigned long lastCorrectionTime;
+    int lastTurn;
+    int lastError;
+    int error;
+    int baseErrorTime;
+    int baseError;
+    int turning;
+    int lasttimeturn;
 public:
+    int _correct;
     Robot();
     void correct(int correction);
     ERobotState followLine(ECatchLine);
+    ERobotState takeTurn(ERobotState state);
     void motorDriverMove(int left, int right);
+    ERobotState followCenterLinePID(ECatchLine state);
+    void correctPID(int);
 };
 
 
