@@ -9,7 +9,7 @@ vw_set_tx_pin(PinSender);
 vw_setup(2000);
 }
 
-void RadioSender::Send( char *Message, int lenght)
+void RadioSender::send( char *Message, int lenght)
 {
     //On crée un paquet
     //byte package[20];

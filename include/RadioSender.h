@@ -9,7 +9,7 @@ class RadioSender
 {
 public:
     RadioSender();
-    void Send( char *Message, int lenght);
+    void send( char *Message, int lenght);
 };
 
 #endif
