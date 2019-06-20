@@ -17,6 +17,7 @@ ERobotState state;
 int left = 0;
 int right = 0;
 unsigned long lastTurn = 0;
+String message = "";
 
 // La fonction setup de l'Arduino
 void setup()
@@ -46,7 +47,8 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    sender->send(String(motorSpeedSensor->getSpeed()).c_str());
+    message = String(motorSpeedSensor->getSpeed());
+    sender->send(message.c_str(), message.length());
     //if (state == FOLLOWING)
     //{
         state = robot->followLine(lineFinder->find());
