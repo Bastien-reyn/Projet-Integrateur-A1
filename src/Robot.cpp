@@ -36,7 +36,7 @@ ERobotState Robot::followLine(ECatchLine state)
 		returnState = ERobotState::LEFT_TURN;
 		break;
 	case ECatchLine::Left:
-		_correct = -30;
+		_correct = -20;
 
 		break;
 	case ECatchLine::Straight:
@@ -53,7 +53,7 @@ ERobotState Robot::followLine(ECatchLine state)
 		
 		break;
 	case ECatchLine::Right:
-		_correct = 30;
+		_correct = 20;
 		break;
 	case ECatchLine::TurnRight:
 		_correct = 50;
