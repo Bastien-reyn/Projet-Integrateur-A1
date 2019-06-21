@@ -8,9 +8,9 @@ class Map
 private:
     bool createTravel(int n, int xp, int yp, int x, int y);
 
-    int xd = 6;
-    int yd = 4;
-    int nmax = 30;
+    int xd;
+    int yd;
+    int nmax;
 
     int posx[30];
     int posy[30];

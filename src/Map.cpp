@@ -1,9 +1,5 @@
 #include "Map.h"
 
-int xd = 6;
-int yd = 4;
-int nmax = 30;
-
 
 // Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
 
@@ -21,7 +17,7 @@ Map::Map() : mapI{
 {
     xd = 6;
     yd = 4;
-    nmax = 30;
+    nmax = 17;
     //Serial.begin(9600);
     Map::setTravel();
 }
