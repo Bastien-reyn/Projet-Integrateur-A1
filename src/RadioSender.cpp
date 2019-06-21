@@ -34,7 +34,7 @@ void RadioSender::send(String Donnees)
     Serial.print((char)mts[0]);
     for(int i = 1; i < taillemsg; i++)
     {
-        mts[i] = uint8_t(Message[i]);
+        mts[i] = uint8_t(Message[i-1]);
         Serial.print((char)mts[i]);
     }
     aes128_enc_single(key, mts); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
