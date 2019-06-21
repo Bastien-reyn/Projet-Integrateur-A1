@@ -18,7 +18,8 @@ void RadioSender::send(String Donnees)
     //strcpy(package, Message);
 
     //On convertit crypte le message en AES
-    int taillemsg=Donnees.length()+1;
+    int taillemsg= Donnees.length() + 1;
+    taillemsg=(taillemsg%16) ? ((taillemsg/16)+1)*16 : taillemsg;
     const char *Message=Donnees.c_str();
     uint8_t key[] = {118, 97, 108, 101, 115, 116, 117, 110, 99, 111, 110, 110, 97, 114, 100, 33}; // La clé de cryptage AES
     uint8_t* mts = (uint8_t*) malloc((taillemsg) * sizeof(uint8_t)); //On crée le tableau de la taille du nombre de caractères du message +1 (pour la clé)
@@ -50,7 +51,7 @@ void RadioSender::send(String Donnees)
     }
     //On commence l'envoi du paquet / message
     //vw_send(paquet, 20);
-    taillemsg=(taillemsg%16) ? ((taillemsg/16)+1)*16 : taillemsg;
+    
     Serial.print(taillemsg);
     vw_send(mts, taillemsg);
 

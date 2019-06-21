@@ -1,8 +1,10 @@
+#define Sender
 #include <Arduino.h>
 #include "Robot.h"
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 #include "RadioSender.h"
+#include "RadioReciever.h"
 
 void updateMotorSpeedSensorRight();
 
@@ -12,12 +14,17 @@ Robot *robot;
 LineFinder *lineFinder;
 MotorSpeedSensor *motorSpeedSensor;
 Map *theMap;
+#ifdef Sender
 RadioSender *sender;
+#endif
+#ifdef Reciever
+RadioReciever *reciever;
+#endif
 ERobotState state;
 int left = 0;
 int right = 0;
 unsigned long lastTurn = 0;
-String message = "";
+String message = "salut";
 
 // La fonction setup de l'Arduino
 void setup()
@@ -36,7 +43,12 @@ void setup()
 
     Serial.print("init ");
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
+    #ifdef Sender
     sender = new RadioSender();
+    #endif
+    #ifdef Reciever
+    reciever = new RadioReciever();
+    #endif
 }
 
 // La loop de l'Arduino
@@ -47,8 +59,11 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    message = String("hellohellohellohellohello");
-    sender->send(message);
+
+#ifdef Sender
+sender->send(message);
+
+/* 
     //(message.c_str(), message.length());
     //if (state == FOLLOWING)
     //{
@@ -60,10 +75,17 @@ void loop()
         state = robot->takeTurn(state);
         lastTurn = millis();
     }
+    */
+#endif
+    #ifdef Reciever
+    reciever->Recieve();
+    Serial.print(".");
+    #endif
     /*
     robot->followCenterLinePID(lineFinder->findCenter());
     Serial.print("test");
     sender->send(String(robot->_correct).c_str());*/
+    delay(200);
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor

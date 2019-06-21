@@ -3,7 +3,7 @@
 
 RadioReciever::RadioReciever()
 {
-//Mise en place du pin de trans²mission
+//Mise en place du pin de transmission
 vw_set_rx_pin(PinReciever);
 //Mise en place de la vitesse de transmission en bit/s
 vw_setup(2000);
@@ -26,7 +26,6 @@ void RadioReciever::Recieve()
           Serial.print(buf[i]);
           Serial.print(" ");
         }
-          Serial.println(" ");
         aes128_dec_single(key, buf);
         if ((char)buf[0]=='A')
         {
