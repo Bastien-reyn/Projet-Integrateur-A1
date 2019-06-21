@@ -4,7 +4,7 @@
 int xd = 6;
 //destination en y
 int yd = 4;
-//déplacement max
+//deplacement max
 int nmax = 19;
 
 
@@ -23,7 +23,7 @@ Map::Map() : mapI{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}} // v
             //<-------------11--------------->
 
-// On va récupérer la map
+//Affichage de la map dans la console
 void Map::getTravel(void)
 {
     for(int n = 0; n < nmax + 2; n++)
@@ -34,6 +34,8 @@ void Map::getTravel(void)
         Serial.println(fposy[n]);
     }
 }
+
+//
 void Map::setTravel(void)
 {
     Serial.println("");
@@ -60,6 +62,7 @@ void Map::setTravel(void)
     }
 }
 
+//fonction récursive pour connaitre le chemin
 bool Map::createTravel(int n, int xp, int yp, int x, int y)
 {
     if (x == xd && y == yd && n < nmax)
