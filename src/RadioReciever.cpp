@@ -28,13 +28,17 @@ void RadioReciever::Recieve()
         }
           Serial.println(" ");
         aes128_dec_single(key, buf);
-
+        if ((char)buf[0]=='A')
+        {
         #ifdef DEBUG
         Serial.print("decrypted:");
         Serial.print((char*)buf);
-
         #endif
-
+        }
+        else
+        {
+         free(buf); 
+        }
     }
     else
     {
@@ -42,5 +46,4 @@ void RadioReciever::Recieve()
       vw_get_rx_bad();
       free(buf);
     }
-    
 }

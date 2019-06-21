@@ -18,19 +18,20 @@ void RadioSender::send(String Donnees)
     //strcpy(package, Message);
 
     //On convertit crypte le message en AES
-    int taillemsg=Donnees.length();
+    int taillemsg=Donnees.length()+1;
     const char *Message=Donnees.c_str();
     uint8_t key[] = {118, 97, 108, 101, 115, 116, 117, 110, 99, 111, 110, 110, 97, 114, 100, 33}; // La clé de cryptage AES
-    uint8_t* mts = (uint8_t*) malloc((taillemsg+1) * sizeof(uint8_t)); //On crée le tableau de la taille du nombre de caractères du message +1 (pour la clé)
+    uint8_t* mts = (uint8_t*) malloc((taillemsg) * sizeof(uint8_t)); //On crée le tableau de la taille du nombre de caractères du message +1 (pour la clé)
     
     //On initialise le tableau à 0
-    for(int i = 0; i < taillemsg+1; i++)
+    for(int i = 0; i < taillemsg; i++)
     {
         mts[i] = 0;
     }
     //On écrit le message sur le tableau à envoyer
-    mts[0] = 'A';
-    for(int i = 1; i < taillemsg+1; i++)
+    mts[0] = 'A'; //La clé d'identification
+    Serial.print((char)mts[0]);
+    for(int i = 1; i < taillemsg; i++)
     {
         mts[i] = uint8_t(Message[i]);
         Serial.print((char)mts[i]);
@@ -41,8 +42,7 @@ void RadioSender::send(String Donnees)
     //Serial.println(String(Message));
     #endif
 
-    mts[0]='A';
-    for(int i = 1; i < taillemsg+1; i++)
+    for(int i = 0; i < taillemsg; i++)
     {
         Serial.print(mts[i], HEX);
         Serial.print(" ");
