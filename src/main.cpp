@@ -47,8 +47,9 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    message = String(motorSpeedSensor->getSpeed());
-    sender->send(message.c_str(), message.length());
+    message = String("hellohellohellohellohello");
+    sender->send(message);
+    //(message.c_str(), message.length());
     //if (state == FOLLOWING)
     //{
         state = robot->followLine(lineFinder->find());

@@ -13,8 +13,8 @@ vw_rx_start();
 
 void RadioReciever::Recieve()
 {
-    uint8_t buf[16];
-    uint8_t buflen = 16;
+    uint8_t buf[80];
+    uint8_t buflen = 80;
     uint8_t key[] = {0x76, 0x61, 0x6c, 0x65, 0x73, 0x74, 0x75, 0x6e, 0x63, 0x6f, 0x6e, 0x6e, 0x61, 0x72, 0x64, 0x21}; // La clé de cryptage AES
     if (vw_get_message(buf, &buflen)) //Renvoie "true" si le message reçu est correct
     {
@@ -40,6 +40,7 @@ void RadioReciever::Recieve()
     {
       // On retourne le nombre de messages reçus incomplets
       vw_get_rx_bad();
+      free(buf);
     }
     
 }
