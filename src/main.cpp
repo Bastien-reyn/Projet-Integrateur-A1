@@ -29,6 +29,9 @@ void setup()
     Serial.println("");
     Serial.println(millis() - time);
     theMap->getTravel();
+
+    for(int n=1;n<17-1;n++)
+        theMap->nextDirection();
     delay(1000);
 
     robot = new Robot();
