@@ -129,10 +129,6 @@ ERobotState Robot::takeTurn(ERobotState state){
 
 		return FOLLOWING;
 	}
-	else
-	{
-		return FOLLOWING;
-	}
 	
     motorDriverMove((left), (right));
     delay(250);
