@@ -11,7 +11,8 @@ typedef enum {
     FOLLOWING,
     LEFT_TURN,
     RIGHT_TURN,
-    LEFT_AND_RIGHT_TURN
+    LEFT_AND_RIGHT_TURN,
+    STOP
 } ERobotState;
 
 class Robot

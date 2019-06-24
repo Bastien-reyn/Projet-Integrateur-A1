@@ -18,7 +18,7 @@ Map::Map() : mapI{
     yd = 4;
 
     currentx = 2;
-    currenty = 2;
+    currenty = 1;
 
     nTurn = 0;
     nMove = 0;
@@ -46,7 +46,7 @@ void Map::setTravel(void)
             Serial.print(((mapI[x][y]) ? "1 " : "0 "));
         Serial.println("");
     }
-    while (createTravel(0, 2, 2, 2, 2))
+    while (createTravel(0, 2, 1, 2, 1))
     {
         for (int n = 0; n < nmax + 1; n++)
         {
@@ -174,6 +174,10 @@ ERobotState Map::nextDirection(void)
 {
     nMove = nMoveTurn[nTurn];
     nTurn++;
+    if (nTurn > nmax)
+    {
+        return ERobotState::STOP;
+    }
     
     //Serial.println("---->");
     //Serial.println(nMove);

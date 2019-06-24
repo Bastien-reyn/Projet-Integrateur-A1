@@ -112,7 +112,7 @@ ERobotState Robot::takeTurn(ERobotState state){
 		return FOLLOWING;
 	}
     motorDriverMove((left), (right));
-    delay(150);
+    delay(200);
 
     while (lineFinder->find() != ECatchLine::Straight)
     {

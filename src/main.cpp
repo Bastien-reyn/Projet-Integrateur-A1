@@ -5,6 +5,7 @@
 #include "RadioSender.h"
 
 void updateMotorSpeedSensorRight();
+void stop();
 
 unsigned long time = 0;
 
@@ -38,6 +39,7 @@ void setup()
     Serial.print("init ");
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
     sender = new RadioSender();
+    
     nextDirection = theMap->nextDirection();
 }
 
@@ -61,6 +63,11 @@ void loop()
         state = robot->takeTurn(nextDirection);
         lastTurn = millis();
         nextDirection = theMap->nextDirection();
+        if (nextDirection == ERobotState::STOP)
+        {
+            stop();
+        }
+        
     }
     /*
     robot->followCenterLinePID(lineFinder->findCenter());
@@ -72,4 +79,18 @@ void loop()
 void updateMotorSpeedSensorRight()
 {
     motorSpeedSensor->update();
+}
+
+/*bool verifyTurn(ERobotState state, ERobotState turn)
+{
+}*/
+
+
+void stop()
+{
+    while (1)
+    {
+            robot->motorDriverMove(0,0);
+    }
+
 }
