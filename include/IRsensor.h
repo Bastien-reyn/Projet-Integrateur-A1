@@ -3,17 +3,19 @@
 
 #include <Arduino.h>
 #include <SharpIR.h>
+#include "math.h"
 
-#define irPin 1
+#define irPin 0
 #define AngleCapteur 30
 
 class IRsensor
 {
 private:
     SharpIR sensor;
-//Renvoi la longueur de la place
+    int distancePrecedente;
 public:
-    float taillePlace(float distance);
+//Renvoi la longueur de la place
+    float taillePlace();
     IRsensor();
 };
 
