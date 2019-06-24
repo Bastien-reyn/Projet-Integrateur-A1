@@ -37,7 +37,7 @@ ECatchLine LineFinder::find(void)
         #ifdef DEBUG
             Serial.println("Turn left");
         #endif
-
+        actualState = ECatchLine::LeftOrRight;
     }
     else if (boolExtremeRight)
     {

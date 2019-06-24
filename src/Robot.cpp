@@ -33,14 +33,19 @@ ERobotState Robot::followLine()
 	switch (state)
 	{
 
+	// TOURNER A GAUCHE !!!!
 	case ECatchLine::TurnLeft:
 		//_correct = -50;
 		returnState = ERobotState::LEFT_TURN;
 		break;
+
+	// CORRECTION A GAUCHE !!!!
 	case ECatchLine::Left:
 		_correct = -30;
 
 		break;
+
+	// TOUT DROIT !!!!
 	case ECatchLine::Straight:
 		_correct = 0;
 	
@@ -54,21 +59,31 @@ ERobotState Robot::followLine()
 		}*/
 		
 		break;
+
+	// CORRECTION A DROITE !!!!
 	case ECatchLine::Right:
 		_correct = 30;
 		break;
+
+	// TOURNER A DROITE !!!!
 	case ECatchLine::TurnRight:
 		//_correct = 50;
 		returnState = ERobotState::RIGHT_TURN;
 		break;
+
+	// RETOUR INUTILISE !!!!
 	case ECatchLine::Reverse:
 		//_correct = 70;
 		break;
+
+	// ERREUR !!!!
 	case ECatchLine::Error:
 #ifdef DEBUG
 		Serial.print("	Exception: there is one exception in LineFinder::find() a case does not fit the conditions.");
 #endif
 		break;
+
+	// INTERSECTION !!!!
 	case ECatchLine::LeftOrRight:
 		returnState = ERobotState::LEFT_AND_RIGHT_TURN;
 		//_correct = 70;
@@ -111,8 +126,14 @@ ERobotState Robot::takeTurn(ERobotState state){
 	else
 	{
 		//error
+
 		return FOLLOWING;
 	}
+	else
+	{
+		return FOLLOWING;
+	}
+	
     motorDriverMove((left), (right));
     delay(250);
 
