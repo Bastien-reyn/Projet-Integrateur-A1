@@ -15,10 +15,10 @@ Map::Map() : mapI{
                  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}
 {
     xd = 6;
-    yd = 4;
+    yd = 2;
 
     currentx = 2;
-    currenty = 8;
+    currenty = 6;
 
     nTurn = 0;
     nMove = 0;
@@ -64,7 +64,7 @@ void Map::setTravel(void)
         nmax--;
     }
     int i = 0;
-    for (int n = 1; n < nmax; n++)
+    for (int n = 1; n < nmax + 2; n++)
         if (isTurn(fposx[n], fposy[n]))
         {
             Serial.print(n);
@@ -176,12 +176,21 @@ ERobotState Map::nextDirection(void)
 {
     nMove = nMoveTurn[nTurn];
     nTurn++;
-    
-    //if(nMove >= nmax)
-      //  return NULL;
+    if (nMove >= nmax)
+    {
+        #ifdef DEBUG
+        Serial.print("STTTTTTTTTTOOOOOOOOOOPPPPPPPPPPPPPPPP");
+        #endif
 
-    Serial.println("---->");
-    Serial.println(nMove);
+        return ERobotState::STOP;
+    }
+
+    #ifdef DEBUG
+    Serial.print("---->Move: ");
+    Serial.print(nMove);
+    Serial.print(" Nmax");
+    Serial.println(nmax);
+     #endif
     bool manu; //true = Left;
     if (fposx[nMove - 1] != fposx[nMove])
     {
@@ -191,7 +200,9 @@ ERobotState Map::nextDirection(void)
             manu = false;
         else if (fposy[nMove - 1] == fposy[nMove])
         {
+            #ifdef DEBUG
             Serial.println("follow");
+            #endif
             return FOLLOWING;
         }
 
@@ -209,17 +220,23 @@ ERobotState Map::nextDirection(void)
             manu = !manu;
         if (fposx[nMove + 1] == fposx[nMove])
         {
+            #ifdef DEBUG
             Serial.println("follow");
+             #endif
             return FOLLOWING;
         }
     }
 
     if (manu)
     {
+        #ifdef DEBUG
         Serial.println("left");
+         #endif
         return LEFT_TURN;
     }
+    #ifdef DEBUG
     Serial.println("right");
+     #endif
     return RIGHT_TURN;
 }
 

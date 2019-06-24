@@ -98,25 +98,26 @@ ERobotState Robot::takeTurn(ERobotState state){
     
     if (state == ERobotState::LEFT_TURN)
     {
-      right = 70;
-      left = -40;
+      right = 90;
+      left = 0;
     }
     else if (state == ERobotState::RIGHT_TURN)
     {
-      left = 70;
-      right = -40;
+      left = 90;
+      right = 0;
     }
-	else if(state == LEFT_AND_RIGHT_TURN)
+	else
 	{
-		takeTurn(RIGHT_TURN);
+		//error
+		return FOLLOWING;
 	}
     motorDriverMove((left), (right));
-    delay(150);
+    delay(200);
+
     while (lineFinder->find() != ECatchLine::Straight)
     {
-      motorDriverMove((left), (right));
+	}
 	  lastTurn = millis();
-    }
 	
 	return ERobotState::FOLLOWING;
 }
