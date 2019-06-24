@@ -1,4 +1,4 @@
-#define Sender
+#define Reciever
 #include <Arduino.h>
 #include "Robot.h"
 #include "Map.h"
