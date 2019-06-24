@@ -38,12 +38,6 @@ void setup()
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
     sender = new RadioSender();
-    
-    nextDirection = theMap->nextDirection();
-    nextDirection = theMap->nextDirection();
-    nextDirection = theMap->nextDirection();
-    nextDirection = theMap->nextDirection();
-    nextDirection = theMap->nextDirection();
 
     Serial.print("init ");
 }
