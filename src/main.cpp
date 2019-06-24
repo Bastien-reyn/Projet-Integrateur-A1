@@ -56,11 +56,11 @@ void loop()
 {
 #ifdef DEBUG
     Serial.print("Duree Boucle :");
-    Serial.println(millis() - time);
-    time = millis();
 #endif
 
 #ifdef Sender
+    Serial.println(millis() - time);
+    time = millis();
 sender->send(message);
 
 /* 
@@ -85,7 +85,6 @@ sender->send(message);
     robot->followCenterLinePID(lineFinder->findCenter());
     Serial.print("test");
     sender->send(String(robot->_correct).c_str());*/
-    delay(200);
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor
