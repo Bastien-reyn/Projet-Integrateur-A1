@@ -51,16 +51,10 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    //message = String(motorSpeedSensor->getSpeed());
-    //sender->send(message.c_str(), message.length());
-    //if (state != ERobotState::LEFT_TURN && state != ERobotState::RIGHT_TURN && state != ERobotState::LEFT_AND_RIGHT_TURN)
-    //{
-        state = robot->followLine();
-    //}
-    Serial.print(state);
+    state = robot->followLine();
+
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
-        //Serial.print("prout");
         state = robot->takeTurn(nextDirection);
         lastTurn = millis();
         nextDirection = theMap->nextDirection();
@@ -70,10 +64,6 @@ void loop()
         }
     }
     state = ERobotState::FOLLOWING;
-    /*
-    robot->followCenterLinePID(lineFinder->findCenter());
-    Serial.print("test");
-    sender->send(String(robot->_correct).c_str());*/
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor
@@ -81,10 +71,6 @@ void updateMotorSpeedSensorRight()
 {
     motorSpeedSensor->update();
 }
-
-/*bool verifyTurn(ERobotState state, ERobotState turn)
-{
-}*/
 
 
 void stop()
