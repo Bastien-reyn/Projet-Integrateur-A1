@@ -22,7 +22,7 @@ void RadioReciever::Recieve()
     if (vw_get_message(buf, &buflen) && buf[0]=='A') //Renvoie "true" si le message reçu est correct
     {
         Serial.print("Recu crypte: ");
-        for(int i = 0; i < buflen; i++)
+        for(int i = 1; i < buflen; i++)
         {
           Serial.print(buf[i], HEX);
           Serial.print(" ");
