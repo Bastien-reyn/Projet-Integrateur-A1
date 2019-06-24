@@ -19,6 +19,7 @@ private:
     int nMoveTurn[17];
     int nMove;
     int nTurn;
+    int nTurnMax;
     int nmax;
     // Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
     bool mapI[9][11];
