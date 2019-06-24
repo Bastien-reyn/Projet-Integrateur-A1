@@ -18,6 +18,7 @@ int left = 0;
 int right = 0;
 unsigned long lastTurn = 0;
 String message = "";
+ERobotState nextDirection;
 
 // La fonction setup de l'Arduino
 void setup()
@@ -37,6 +38,7 @@ void setup()
     Serial.print("init ");
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
     sender = new RadioSender();
+    nextDirection = theMap->nextDirection();
 }
 
 // La loop de l'Arduino
@@ -47,8 +49,8 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    message = String(motorSpeedSensor->getSpeed());
-    sender->send(message.c_str(), message.length());
+    //message = String(motorSpeedSensor->getSpeed());
+    //sender->send(message.c_str(), message.length());
     //if (state == FOLLOWING)
     //{
         state = robot->followLine(lineFinder->find());
@@ -56,8 +58,9 @@ void loop()
 
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 150)
     {
-        state = robot->takeTurn(state);
+        state = robot->takeTurn(nextDirection);
         lastTurn = millis();
+        nextDirection = theMap->nextDirection();
     }
     /*
     robot->followCenterLinePID(lineFinder->findCenter());

@@ -175,8 +175,8 @@ ERobotState Map::nextDirection(void)
     nMove = nMoveTurn[nTurn];
     nTurn++;
     
-    Serial.println("---->");
-    Serial.println(nMove);
+    //Serial.println("---->");
+    //Serial.println(nMove);
     bool manu; //true = Left;
     if (fposx[nMove - 1] != fposx[nMove])
     {
@@ -204,17 +204,17 @@ ERobotState Map::nextDirection(void)
             manu = !manu;
         if (fposx[nMove + 1] == fposx[nMove])
         {
-            Serial.println("follow");
+            //Serial.println("follow");
             return FOLLOWING;
         }
     }
 
     if (manu)
     {
-        Serial.println("left");
+        //Serial.println("left");
         return LEFT_TURN;
     }
-    Serial.println("right");
+    //Serial.println("right");
     return RIGHT_TURN;
 }
 

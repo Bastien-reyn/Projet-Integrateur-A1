@@ -27,26 +27,26 @@ void RadioSender::send(const char *Message, int lenght)
     for(int i = 0; i < lenght; i++)
     {
         mts[i] = uint8_t(Message[i]);
-        Serial.print((char)mts[i]);
+        //Serial.print((char)mts[i]);
     }
     aes128_enc_single(key, mts); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
     #ifdef DEBUG
-    Serial.println("données cryptées");
+    //Serial.println("données cryptées");
     //Serial.println(String(Message));
     #endif
 
-    for(int i = 0; i < 16; i++)
+    /*for(int i = 0; i < 16; i++)
     {
         Serial.print(mts[i], HEX);
         Serial.print(" ");
 
-    }
+    }*/
     //On commence l'envoi du paquet / message
     //vw_send(paquet, 20);
     vw_send(mts, 16);
 
     //Cette fonction va bloquer le programme jusqu'a ce que l'envoi soit bien terminé 
-    Serial.print("Envoye");
+    //Serial.print("Envoye");
     free(mts);
 }
 
