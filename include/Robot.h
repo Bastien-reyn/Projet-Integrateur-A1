@@ -11,7 +11,8 @@ typedef enum {
     FOLLOWING,
     LEFT_TURN,
     RIGHT_TURN,
-    LEFT_AND_RIGHT_TURN
+    LEFT_AND_RIGHT_TURN,
+    STOP
 } ERobotState;
 
 class Robot
@@ -31,7 +32,7 @@ public:
     int _correct;
     Robot();
     void correct(int correction);
-    ERobotState followLine(ECatchLine);
+    ERobotState followLine();
     ERobotState takeTurn(ERobotState state);
     void motorDriverMove(int left, int right);
     ERobotState followCenterLinePID(ECatchLine state);
