@@ -1,8 +1,10 @@
+#define Reciever
 #include <Arduino.h>
 #include "Robot.h"
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 #include "RadioSender.h"
+#include "RadioReciever.h"
 
 void updateMotorSpeedSensorRight();
 void stop();
@@ -13,7 +15,12 @@ Robot *robot;
 //LineFinder *lineFinder;
 MotorSpeedSensor *motorSpeedSensor;
 Map *theMap;
+#ifdef Sender
 RadioSender *sender;
+#endif
+#ifdef Reciever
+RadioReciever *reciever;
+#endif
 ERobotState state;
 int left = 0;
 int right = 0;
@@ -37,7 +44,12 @@ void setup()
     //lineFinder = new LineFinder();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
+    #ifdef Sender
     sender = new RadioSender();
+    #endif
+    #ifdef Reciever
+    reciever = new RadioReciever();
+    #endif
 
     Serial.print("init ");
     nextDirection = theMap->nextDirection();
@@ -51,6 +63,10 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
+
+#ifdef Sender
+  //sender->send(message);
+
     state = robot->followLine();
 
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
@@ -63,7 +79,13 @@ void loop()
             stop();
         }
     }
-    state = ERobotState::FOLLOWING;
+  state = ERobotState::FOLLOWING;
+#endif
+    #ifdef Reciever
+    reciever->Recieve();
+    Serial.print(".");
+    #endif
+
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor
