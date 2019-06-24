@@ -178,14 +178,14 @@ ERobotState Map::nextDirection(void)
     nTurn++;
     if (nMove >= nmax)
     {
-        #ifdef DEBUG
+        #ifdef DEBUG_MAP
         Serial.print("STTTTTTTTTTOOOOOOOOOOPPPPPPPPPPPPPPPP");
         #endif
 
         return ERobotState::STOP;
     }
 
-    #ifdef DEBUG
+    #ifdef DEBUG_MAP
     Serial.print("---->Move: ");
     Serial.print(nMove);
     Serial.print(" Nmax");
@@ -200,7 +200,7 @@ ERobotState Map::nextDirection(void)
             manu = false;
         else if (fposy[nMove - 1] == fposy[nMove])
         {
-            #ifdef DEBUG
+            #ifdef DEBUG_MAP
             Serial.println("follow");
             #endif
             return FOLLOWING;
@@ -220,7 +220,7 @@ ERobotState Map::nextDirection(void)
             manu = !manu;
         if (fposx[nMove + 1] == fposx[nMove])
         {
-            #ifdef DEBUG
+            #ifdef DEBUG_MAP
             Serial.println("follow");
              #endif
             return FOLLOWING;
@@ -229,12 +229,12 @@ ERobotState Map::nextDirection(void)
 
     if (manu)
     {
-        #ifdef DEBUG
+        #ifdef DEBUG_MAP
         Serial.println("left");
          #endif
         return LEFT_TURN;
     }
-    #ifdef DEBUG
+    #ifdef DEBUG_MAP
     Serial.println("right");
      #endif
     return RIGHT_TURN;

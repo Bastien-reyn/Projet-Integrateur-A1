@@ -22,17 +22,19 @@ Robot::Robot()
 	turning = 0;
 	lasttimeturn = 0;
 	Serial.println(Motor.begin(I2C_ADDRESS));
+	lineFinder = new LineFinder();
 }
 
-ERobotState Robot::followLine(ECatchLine state)
+ERobotState Robot::followLine()
 {
+	ECatchLine state = lineFinder->find();
 	ERobotState returnState = ERobotState::FOLLOWING;
 
 	switch (state)
 	{
 
 	case ECatchLine::TurnLeft:
-		_correct = -50;
+		//_correct = -50;
 		returnState = ERobotState::LEFT_TURN;
 		break;
 	case ECatchLine::Left:
@@ -56,7 +58,7 @@ ERobotState Robot::followLine(ECatchLine state)
 		_correct = 20;
 		break;
 	case ECatchLine::TurnRight:
-		_correct = 50;
+		//_correct = 50;
 		returnState = ERobotState::RIGHT_TURN;
 		break;
 	case ECatchLine::Reverse:
@@ -98,12 +100,12 @@ ERobotState Robot::takeTurn(ERobotState state){
     
     if (state == ERobotState::LEFT_TURN)
     {
-      right = 90;
+      right = 95;
       left = 0;
     }
     else if (state == ERobotState::RIGHT_TURN)
     {
-      left = 90;
+      left = 95;
       right = 0;
     }
 	else
@@ -112,7 +114,7 @@ ERobotState Robot::takeTurn(ERobotState state){
 		return FOLLOWING;
 	}
     motorDriverMove((left), (right));
-    delay(200);
+    delay(250);
 
     while (lineFinder->find() != ECatchLine::Straight)
     {

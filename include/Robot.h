@@ -32,7 +32,7 @@ public:
     int _correct;
     Robot();
     void correct(int correction);
-    ERobotState followLine(ECatchLine);
+    ERobotState followLine();
     ERobotState takeTurn(ERobotState state);
     void motorDriverMove(int left, int right);
     ERobotState followCenterLinePID(ECatchLine state);

@@ -10,7 +10,7 @@ void stop();
 unsigned long time = 0;
 
 Robot *robot;
-LineFinder *lineFinder;
+//LineFinder *lineFinder;
 MotorSpeedSensor *motorSpeedSensor;
 Map *theMap;
 RadioSender *sender;
@@ -32,14 +32,15 @@ void setup()
     Serial.println(millis() - time);
     theMap->getTravel();
     delay(1000);
-
+    state = FOLLOWING;
     robot = new Robot();
-    lineFinder = new LineFinder();
+    //lineFinder = new LineFinder();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
     sender = new RadioSender();
 
     Serial.print("init ");
+    nextDirection = theMap->nextDirection();
 }
 
 // La loop de l'Arduino
@@ -52,13 +53,14 @@ void loop()
 #endif
     //message = String(motorSpeedSensor->getSpeed());
     //sender->send(message.c_str(), message.length());
-    //if (state == FOLLOWING)
+    //if (state != ERobotState::LEFT_TURN && state != ERobotState::RIGHT_TURN && state != ERobotState::LEFT_AND_RIGHT_TURN)
     //{
-        state = robot->followLine(lineFinder->find());
-        //}
-
-    if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 150)
+        state = robot->followLine();
+    //}
+    Serial.print(state);
+    if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
+        //Serial.print("prout");
         state = robot->takeTurn(nextDirection);
         lastTurn = millis();
         nextDirection = theMap->nextDirection();
@@ -66,8 +68,8 @@ void loop()
         {
             stop();
         }
-        
     }
+    state = ERobotState::FOLLOWING;
     /*
     robot->followCenterLinePID(lineFinder->findCenter());
     Serial.print("test");
@@ -87,6 +89,7 @@ void updateMotorSpeedSensorRight()
 
 void stop()
 {
+    Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
     while (1)
     {
             robot->motorDriverMove(0,0);

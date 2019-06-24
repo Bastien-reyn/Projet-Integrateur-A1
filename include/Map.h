@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "Robot.h"
 
+#define DEBUG_MAP
+
 class Map
 {
 private:
