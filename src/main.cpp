@@ -7,7 +7,6 @@
 
 void updateMotorSpeedSensorRight();
 void stop();
-
 unsigned long time = 0;
 
 Robot *robot;
@@ -26,6 +25,8 @@ int right = 0;
 unsigned long lastTurn = 0;
 String message = "";
 ERobotState nextDirection;
+double SpeedAvg = 0;
+unsigned int nSpeed;
 
 // La fonction setup de l'Arduino
 void setup()
@@ -65,7 +66,8 @@ void loop()
 
 #ifdef Sender
     //sender->send(message);
-
+    SpeedAvg += motorSpeedSensor->getSpeed();
+    nSpeed++;
     state = robot->followLine();
 
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
@@ -95,6 +97,7 @@ void updateMotorSpeedSensorRight()
 void stop()
 {
     Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
+    sender->send(String(SpeedAvg / nSpeed));
     while (1)
     {
         robot->motorDriverMove(0, 0);
