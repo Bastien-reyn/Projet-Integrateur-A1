@@ -123,12 +123,7 @@ ERobotState Robot::takeTurn(ERobotState state){
       left = 90;
       right = 0;
     }
-	else
-	{
-		//error
 
-		return FOLLOWING;
-	}
 	else
 	{
 		return FOLLOWING;

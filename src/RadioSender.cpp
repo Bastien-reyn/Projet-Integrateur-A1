@@ -1,5 +1,4 @@
 #include "RadioSender.h"
-#define DEBUG
 
 RadioSender::RadioSender()
 {
