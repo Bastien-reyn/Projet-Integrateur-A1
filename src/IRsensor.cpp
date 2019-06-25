@@ -7,17 +7,19 @@ IRsensor::IRsensor() : sensor(SharpIR::GP2Y0A21YK0F, irPin)
 
 float IRsensor::taillePlace()
 {
-    int difference = 0;
+    double difference = 0;
     int distanceActuel = sensor.getDistance();
-    Serial.println((int)distanceActuel + " " + (int)distancePrecedente);
-    if( distanceActuel > distancePrecedente + 3 )
+    /* Serial.print(distanceActuel);
+    Serial.print(" ");
+    Serial.println(distancePrecedente);*/
+    if( distanceActuel > distancePrecedente + 8 )
     {
         difference = distanceActuel - distancePrecedente;
     }
     
     distancePrecedente = distanceActuel;
-    float oui = (float)difference*(float)(acos(AngleCapteur));
-    Serial.print((int)oui);
-    return (float)difference*(float)(acos(AngleCapteur));
+    //float oui = (float)difference*(float)(acos(AngleCapteur));
+    //Serial.print((int)oui);
+    return difference * cos(radians(AngleCapteur));
     //return (float)sensor.getDistance();
 }

@@ -3,8 +3,9 @@
 #include "Map.h"
 #include "MotorSpeedSensor.h"
 #include "RadioSender.h"
+#include "IRsensor.h"
 
-void updateMotorSpeedSensorRight();
+/* void updateMotorSpeedSensorRight();
 
 unsigned long time = 0;
 
@@ -18,13 +19,15 @@ int left = 0;
 int right = 0;
 unsigned long lastTurn = 0;
 String message = "";
+*/
+IRsensor* sensor;
 
 // La fonction setup de l'Arduino
 void setup()
 {
     Serial.begin(9600);
 
-    time = millis();
+  /*   time = millis();
     theMap = new Map();
     Serial.println("");
     Serial.println(millis() - time);
@@ -37,6 +40,8 @@ void setup()
     Serial.print("init ");
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
     sender = new RadioSender();
+    */
+    sensor = new IRsensor();
 }
 
 // La loop de l'Arduino
@@ -47,7 +52,7 @@ void loop()
     Serial.println(millis() - time);
     time = millis();
 #endif
-    message = String(motorSpeedSensor->getSpeed());
+    /*message = String(motorSpeedSensor->getSpeed());
     sender->send(message.c_str(), message.length());
     //if (state == FOLLOWING)
     //{
@@ -58,15 +63,24 @@ void loop()
     {
         state = robot->takeTurn(state);
         lastTurn = millis();
-    }
+    }*///////
     /*
     robot->followCenterLinePID(lineFinder->findCenter());
     Serial.print("test");
     sender->send(String(robot->_correct).c_str());*/
+    float taille = sensor->taillePlace();
+    if (taille>10)
+    {
+        Serial.println(String(taille) );
+
+    }
+    delay(200);
+
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor
-void updateMotorSpeedSensorRight()
+/* void updateMotorSpeedSensorRight()
 {
     motorSpeedSensor->update();
 }
+*/
