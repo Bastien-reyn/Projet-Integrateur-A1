@@ -33,7 +33,7 @@ void setup()
     Serial.begin(9600);
 
     time = millis();
-    theMap = new Map();
+    theMap = new Map('A','8');
     Serial.println("");
     Serial.println(millis() - time);
     theMap->getTravel();
@@ -52,6 +52,9 @@ void setup()
 
     Serial.print("init ");
     nextDirection = theMap->nextDirection();
+
+
+    Serial.println(theMap->getPos());
 }
 
 // La loop de l'Arduino
@@ -70,13 +73,14 @@ void loop()
 
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
-        state = robot->takeTurn(nextDirection);
-        lastTurn = millis();
-        nextDirection = theMap->nextDirection();
         if (nextDirection == ERobotState::STOP)
         {
             stop();
         }
+        state = robot->takeTurn(nextDirection);
+        lastTurn = millis();
+        nextDirection = theMap->nextDirection();
+        
     }
   state = ERobotState::FOLLOWING;
 #endif
