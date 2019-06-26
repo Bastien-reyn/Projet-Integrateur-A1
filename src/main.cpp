@@ -6,7 +6,7 @@
 #include "RadioReciever.h"
 #include "IRsensor.h"
 
-#define TAILLE_VOITURE 35;
+#define TAILLE_VOITURE 35
 
 void updateMotorSpeedSensorRight();
 void stop();
@@ -102,11 +102,6 @@ void loop()
 #endif
 #ifdef Reciever
     reciever->Recieve();
-<<<<<<< HEAD
-    Serial.print(".");
-=======
-
->>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 #endif
 }
 
@@ -134,8 +129,5 @@ void stop()
     {
         robot->motorDriverMove(0, 0);
     }
-<<<<<<< HEAD
-=======
     #endif
->>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 }
