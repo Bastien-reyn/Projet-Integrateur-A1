@@ -2,6 +2,7 @@
 #define _MAP_H
 
 #include <Arduino.h>
+#include <string.h>
 #include "Robot.h"
 
 #define DEBUG_MAP
@@ -33,7 +34,8 @@ public:
     int currenty;
     
  
-    Map();
+    Map(char x,char y);
+    String getPos(void);
     void getTravel(void);
     void setTravel(void);
     ERobotState nextDirection(void);

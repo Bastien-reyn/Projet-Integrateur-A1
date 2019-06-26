@@ -33,7 +33,7 @@ void setup()
     Serial.begin(9600);
 
     time = millis();
-    theMap = new Map();
+    theMap = new Map('A', '8');
     Serial.println("");
     Serial.println(millis() - time);
     theMap->getTravel();
@@ -43,12 +43,12 @@ void setup()
     //lineFinder = new LineFinder();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
-    #ifdef Sender
+#ifdef Sender
     sender = new RadioSender();
-    #endif
-    #ifdef Reciever
+#endif
+#ifdef Reciever
     reciever = new RadioReciever();
-    #endif
+#endif
 
     Serial.print("init ");
     nextDirection = theMap->nextDirection();
@@ -64,27 +64,27 @@ void loop()
 #endif
 
 #ifdef Sender
-  //sender->send(message);
+    //sender->send(message);
 
     state = robot->followLine();
 
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
-        state = robot->takeTurn(nextDirection);
-        lastTurn = millis();
-        nextDirection = theMap->nextDirection();
         if (nextDirection == ERobotState::STOP)
         {
             stop();
         }
+
+        state = robot->takeTurn(nextDirection);
+        lastTurn = millis();
+        nextDirection = theMap->nextDirection();
     }
-  state = ERobotState::FOLLOWING;
+    state = ERobotState::FOLLOWING;
 #endif
-    #ifdef Reciever
+#ifdef Reciever
     reciever->Recieve();
     Serial.print(".");
-    #endif
-
+#endif
 }
 
 //update function for the attachInterrupt function of the MotorSpeedSensor
@@ -93,13 +93,11 @@ void updateMotorSpeedSensorRight()
     motorSpeedSensor->update();
 }
 
-
 void stop()
 {
     Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
     while (1)
     {
-            robot->motorDriverMove(0,0);
+        robot->motorDriverMove(0, 0);
     }
-
 }

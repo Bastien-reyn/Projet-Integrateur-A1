@@ -3,7 +3,7 @@
 // Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
 
 // On va créer la map à l'aide de la fonction "setTravel"
-Map::Map() : mapI{
+Map::Map(char x,char y) : mapI{
                  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                  {1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
                  {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
@@ -17,14 +17,22 @@ Map::Map() : mapI{
     xd = 6;
     yd = 2;
 
-    currentx = 2;
-    currenty = 6;
+    currentx = (int)( x - 65 );
+    currenty = (int)( y - 48 );
+
 
     nTurn = 0;
     nMove = 0;
     nmax = 17;
     //Serial.begin(9600);
     Map::setTravel();
+}
+String Map::getPos(void)
+{
+    String message = "";
+    message += (char)(currenty + 65);// 'A' = 65 assci in table
+    message += (char)(currentx + 48); // '0' = 48 assci in table
+    return message;
 }
 // On va récupérer la map
 void Map::getTravel(void)
@@ -176,21 +184,24 @@ ERobotState Map::nextDirection(void)
 {
     nMove = nMoveTurn[nTurn];
     nTurn++;
+    currentx = fposx[nMove];
+    currenty = fposy[nMove];
+
     if (nMove >= nmax)
     {
-        #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
         Serial.print("STTTTTTTTTTOOOOOOOOOOPPPPPPPPPPPPPPPP");
-        #endif
+#endif
 
         return ERobotState::STOP;
     }
 
-    #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
     Serial.print("---->Move: ");
     Serial.print(nMove);
     Serial.print(" Nmax");
     Serial.println(nmax);
-     #endif
+#endif
     bool manu; //true = Left;
     if (fposx[nMove - 1] != fposx[nMove])
     {
@@ -200,9 +211,9 @@ ERobotState Map::nextDirection(void)
             manu = false;
         else if (fposy[nMove - 1] == fposy[nMove])
         {
-            #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
             Serial.println("follow");
-            #endif
+#endif
             return FOLLOWING;
         }
 
@@ -220,23 +231,23 @@ ERobotState Map::nextDirection(void)
             manu = !manu;
         if (fposx[nMove + 1] == fposx[nMove])
         {
-            #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
             Serial.println("follow");
-             #endif
+#endif
             return FOLLOWING;
         }
     }
 
     if (manu)
     {
-        #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
         Serial.println("left");
-         #endif
+#endif
         return LEFT_TURN;
     }
-    #ifdef DEBUG_MAP
+#ifdef DEBUG_MAP
     Serial.println("right");
-     #endif
+#endif
     return RIGHT_TURN;
 }
 
