@@ -30,12 +30,15 @@ double SpeedAvg = 0;
 unsigned int nSpeed;
 IRsensor *irSensor;
 int nombrePlaces = 0;
+int dernierePlace = 0;
+int placeTemp = 0;
 
 // La fonction setup de l'Arduino
 void setup()
 {
     Serial.begin(9600);
 
+#ifdef Sender
     time = millis();
     theMap = new Map();
     Serial.println("");
@@ -48,15 +51,14 @@ void setup()
     irSensor = new IRsensor();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
-#ifdef Sender
     sender = new RadioSender();
+    Serial.print("init ");
+    nextDirection = theMap->nextDirection();
 #endif
 #ifdef Reciever
     reciever = new RadioReciever();
 #endif
 
-    Serial.print("init ");
-    nextDirection = theMap->nextDirection();
 }
 
 // La loop de l'Arduino
@@ -73,11 +75,11 @@ void loop()
     SpeedAvg += motorSpeedSensor->getSpeed();
     nSpeed++;
     state = robot->followLine();
-    int TaillePlace=irSensor->taillePlace();
-    if (TaillePlace != 0)
+    placeTemp = irSensor->taillePlace();
+    if (placeTemp > 10)
     {
+        dernierePlace = placeTemp;
         nombrePlaces++;
-        sender ->send(String (TaillePlace));
     }
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
@@ -93,7 +95,7 @@ void loop()
 #endif
 #ifdef Reciever
     reciever->Recieve();
-    Serial.print(".");
+
 #endif
 }
 
@@ -105,15 +107,21 @@ void updateMotorSpeedSensorRight()
 
 void stop()
 {
+    #ifdef Sender
+    robot->motorDriverMove(0, 0);
     String message = "Vitesse moyenne :";
     String message2 = "Nombre places : ";
+    String message3 = "Taille Derniere Place";
     message += String(SpeedAvg / nSpeed);
     message2 += String(nombrePlaces);
+    message3 += String(dernierePlace);
+    sender -> send(message);
+    sender -> send(message2);
+    sender -> send(message3);
     Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
-    sender->send(message2);
-    sender->send(message);
     while (1)
     {
         robot->motorDriverMove(0, 0);
     }
+    #endif
 }

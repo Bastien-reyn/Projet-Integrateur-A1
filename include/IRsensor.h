@@ -5,7 +5,7 @@
 #include <SharpIR.h>
 #include "math.h"
 
-#define irPin 0
+#define irPin A1
 #define AngleCapteur 30
 
 class IRsensor

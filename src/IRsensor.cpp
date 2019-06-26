@@ -1,6 +1,6 @@
 #include "IRsensor.h"
 
-IRsensor::IRsensor() : sensor(SharpIR::GP2Y0A21YK0F, irPin)
+IRsensor::IRsensor() : sensor(SharpIR::GP2Y0A21YK0F, A1)
 {
     distancePrecedente=0;
 }

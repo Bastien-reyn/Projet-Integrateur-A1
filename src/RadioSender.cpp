@@ -40,10 +40,10 @@ void RadioSender::send(String Donnees)
         mts[i] = uint8_t(Message[i-1]);
     }
     aes128_enc_single(key, mts + 1); //On appelle la fonction qui va encoder le message en fonction de la clé fournie
-
+    mts[0]='A';
     #ifdef DEBUG
     // Serial.println("données cryptées");
-    mts[0]='A';
+
      for(int i = 0; i < taillemsg+1; i++)
     {
         Serial.print(mts[i], HEX);
