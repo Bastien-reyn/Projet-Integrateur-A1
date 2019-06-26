@@ -6,6 +6,8 @@
 #include "RadioReciever.h"
 #include "IRsensor.h"
 
+#define TAILLE_VOITURE 35;
+
 void updateMotorSpeedSensorRight();
 void stop();
 unsigned long time = 0;
@@ -76,7 +78,7 @@ void loop()
     nSpeed++;
     state = robot->followLine();
     placeTemp = irSensor->taillePlace();
-    if (placeTemp > 10)
+    if (placeTemp > TAILLE_VOITURE && state == ERobotState::FOLLOWING )
     {
         dernierePlace = placeTemp;
         nombrePlaces++;
