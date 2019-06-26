@@ -29,7 +29,7 @@ unsigned long lastTurn = 0;
 String message = "";
 ERobotState nextDirection;
 double SpeedAvg = 0;
-unsigned int nSpeed;
+double nSpeed = 0;
 IRsensor *irSensor;
 int nombrePlaces = 0;
 int dernierePlace = 0;
@@ -80,6 +80,8 @@ void loop()
 
 #ifdef Sender
     //sender->send(message);
+    SpeedAvg += motorSpeedSensor->getSpeed();
+    nSpeed++;
     state = robot->followLine();
     placeTemp = irSensor->taillePlace();
     if (placeTemp > TAILLE_VOITURE && state == ERobotState::FOLLOWING )
