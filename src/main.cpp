@@ -42,7 +42,7 @@ void setup()
 
 #ifdef Sender
     time = millis();
-    theMap = new Map();
+    theMap = new Map('A', '8');
     Serial.println("");
     Serial.println(millis() - time);
     theMap->getTravel();
@@ -53,7 +53,13 @@ void setup()
     irSensor = new IRsensor();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
+#ifdef Sender
     sender = new RadioSender();
+#endif
+#ifdef Reciever
+    reciever = new RadioReciever();
+#endif
+
     Serial.print("init ");
     nextDirection = theMap->nextDirection();
 #endif
@@ -74,8 +80,6 @@ void loop()
 
 #ifdef Sender
     //sender->send(message);
-    SpeedAvg += motorSpeedSensor->getSpeed();
-    nSpeed++;
     state = robot->followLine();
     placeTemp = irSensor->taillePlace();
     if (placeTemp > TAILLE_VOITURE && state == ERobotState::FOLLOWING )
@@ -85,19 +89,24 @@ void loop()
     }
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
-        state = robot->takeTurn(nextDirection);
-        lastTurn = millis();
-        nextDirection = theMap->nextDirection();
         if (nextDirection == ERobotState::STOP)
         {
             stop();
         }
+
+        state = robot->takeTurn(nextDirection);
+        lastTurn = millis();
+        nextDirection = theMap->nextDirection();
     }
     state = ERobotState::FOLLOWING;
 #endif
 #ifdef Reciever
     reciever->Recieve();
+<<<<<<< HEAD
+    Serial.print(".");
+=======
 
+>>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 #endif
 }
 
@@ -125,5 +134,8 @@ void stop()
     {
         robot->motorDriverMove(0, 0);
     }
+<<<<<<< HEAD
+=======
     #endif
+>>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 }
