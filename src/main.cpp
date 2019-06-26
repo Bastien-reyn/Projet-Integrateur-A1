@@ -4,10 +4,10 @@
 #include "MotorSpeedSensor.h"
 #include "RadioSender.h"
 #include "RadioReciever.h"
+#include "IRsensor.h"
 
 void updateMotorSpeedSensorRight();
 void stop();
-
 unsigned long time = 0;
 
 Robot *robot;
@@ -26,12 +26,19 @@ int right = 0;
 unsigned long lastTurn = 0;
 String message = "";
 ERobotState nextDirection;
+double SpeedAvg = 0;
+unsigned int nSpeed;
+IRsensor *irSensor;
+int nombrePlaces = 0;
+int dernierePlace = 0;
+int placeTemp = 0;
 
 // La fonction setup de l'Arduino
 void setup()
 {
     Serial.begin(9600);
 
+#ifdef Sender
     time = millis();
     theMap = new Map('A', '8');
     Serial.println("");
@@ -41,6 +48,7 @@ void setup()
     state = FOLLOWING;
     robot = new Robot();
     //lineFinder = new LineFinder();
+    irSensor = new IRsensor();
 
     motorSpeedSensor = new MotorSpeedSensor(updateMotorSpeedSensorRight);
 #ifdef Sender
@@ -52,6 +60,11 @@ void setup()
 
     Serial.print("init ");
     nextDirection = theMap->nextDirection();
+#endif
+#ifdef Reciever
+    reciever = new RadioReciever();
+#endif
+
 }
 
 // La loop de l'Arduino
@@ -65,9 +78,13 @@ void loop()
 
 #ifdef Sender
     //sender->send(message);
-
     state = robot->followLine();
-
+    placeTemp = irSensor->taillePlace();
+    if (placeTemp > 10)
+    {
+        dernierePlace = placeTemp;
+        nombrePlaces++;
+    }
     if (state != ERobotState::FOLLOWING && millis() - lastTurn >= 400)
     {
         if (nextDirection == ERobotState::STOP)
@@ -83,7 +100,11 @@ void loop()
 #endif
 #ifdef Reciever
     reciever->Recieve();
+<<<<<<< HEAD
     Serial.print(".");
+=======
+
+>>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 #endif
 }
 
@@ -95,9 +116,24 @@ void updateMotorSpeedSensorRight()
 
 void stop()
 {
+    #ifdef Sender
+    robot->motorDriverMove(0, 0);
+    String message = "Vitesse moyenne :";
+    String message2 = "Nombre places : ";
+    String message3 = "Taille Derniere Place";
+    message += String(SpeedAvg / nSpeed);
+    message2 += String(nombrePlaces);
+    message3 += String(dernierePlace);
+    sender -> send(message);
+    sender -> send(message2);
+    sender -> send(message3);
     Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
     while (1)
     {
         robot->motorDriverMove(0, 0);
     }
+<<<<<<< HEAD
+=======
+    #endif
+>>>>>>> 9298c1e002b6a09167363b8234dc79a006fd33c5
 }
