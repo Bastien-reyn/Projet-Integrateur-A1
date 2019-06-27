@@ -3,7 +3,7 @@
 // Le tableau qui va contenir la map sous forme de 0 (rien) et de 1 (route)
 
 // On va créer la map à l'aide de la fonction "setTravel"
-Map::Map(char x,char y) : mapI{
+Map::Map(char x,int y,char xdd,int ydd) : mapI{
                  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                  {1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
                  {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
@@ -14,11 +14,12 @@ Map::Map(char x,char y) : mapI{
                  {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
                  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}
 {
-    xd = 6;
-    yd = 2;
+
+     xd = (int)( xdd - 65 );
+     yd = ydd;
 
     currentx = (int)( x - 65 );
-    currenty = (int)( y - 48 );
+    currenty = y;
 
 
     nTurn = 0;
@@ -29,9 +30,10 @@ Map::Map(char x,char y) : mapI{
 }
 String Map::getPos(void)
 {
-    String message = "";
-    message += (char)(currenty + 65);// 'A' = 65 assci in table
-    message += (char)(currentx + 48); // '0' = 48 assci in table
+    String message = "x:";
+    message += String(currenty);
+    message += ";y:";
+    message += String(currentx);
     return message;
 }
 // On va récupérer la map

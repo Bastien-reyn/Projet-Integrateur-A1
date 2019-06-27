@@ -34,7 +34,7 @@ public:
     int currenty;
     
  
-    Map(char x,char y);
+    Map(char x,int y,char xdd,int ydd);
     String getPos(void);
     void getTravel(void);
     void setTravel(void);

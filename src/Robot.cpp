@@ -8,7 +8,6 @@ double P = 0;
 double I = 0;
 double D = 0;
 
-
 Robot::Robot()
 {
 	_correct = 0;
@@ -48,7 +47,7 @@ ERobotState Robot::followLine()
 	// TOUT DROIT !!!!
 	case ECatchLine::Straight:
 		_correct = 0;
-	
+
 		/*if (_correct > 0)
 		{
 			correct(-5);
@@ -57,7 +56,7 @@ ERobotState Robot::followLine()
 		{
 			correct(5);
 		}*/
-		
+
 		break;
 
 	// CORRECTION A DROITE !!!!
@@ -108,36 +107,37 @@ ERobotState Robot::followLine()
 	return returnState;
 }
 
-
-ERobotState Robot::takeTurn(ERobotState state){
+void Robot::takeTurn(ERobotState state, RadioSender *sender,String pos)
+{
 	int left = 0;
 	int right = 0;
-    
-    if (state == ERobotState::LEFT_TURN)
-    {
-      right = 90;
-      left = 0;
-    }
-    else if (state == ERobotState::RIGHT_TURN)
-    {
-      left = 90;
-      right = 0;
-    }
 
-	else
+	if (state == ERobotState::LEFT_TURN)
 	{
-		return FOLLOWING;
+		right = 90;
+		left = 0;
 	}
-	
-    motorDriverMove((left), (right));
-    delay(250);
+	else if (state == ERobotState::RIGHT_TURN)
+	{
+		left = 90;
+		right = 0;
+	}
+	// ralentir ou ne as ralentir a chaque virage
+	/*else{
+		return;
+	}*/
 
-    while (lineFinder->find() != ECatchLine::Straight)
-    {
-	}
-	  lastTurn = millis();
+	motorDriverMove((left), (right));
+
+	int preTime = millis();
+
+	sender->send(pos);
+
+	while (millis() - preTime < 250);
+
+	while (lineFinder->find() != ECatchLine::Straight);
 	
-	return ERobotState::FOLLOWING;
+	lastTurn = millis();
 }
 
 void Robot::motorDriverMove(int left, int right)
@@ -153,19 +153,17 @@ void Robot::correct(int correction)
 		lastCorrectionTime = millis();
 		_correct += correction;
 	}
-	#ifdef DEBUG
-		if (millis() - lastCorrectionTime > 200)
-		{
-			Serial.print("	Correction trop longue.");
-		}
-	#endif
+#ifdef DEBUG
+	if (millis() - lastCorrectionTime > 200)
+	{
+		Serial.print("	Correction trop longue.");
+	}
+#endif
 }
-
 
 ERobotState Robot::followCenterLinePID(ECatchLine state)
 {
 	ERobotState returnState = ERobotState::FOLLOWING;
-	
 
 	switch (state)
 	{
@@ -193,17 +191,17 @@ ERobotState Robot::followCenterLinePID(ECatchLine state)
 		//_correct = 70;
 		break;
 	case ECatchLine::Error:
-	#ifdef DEBUG
+#ifdef DEBUG
 		Serial.print("	Exception: there is one exception in LineFinder::find() a case does not fit the conditions.");
-	#endif
+#endif
 		break;
 	case ECatchLine::LeftOrRight:
 		returnState = ERobotState::LEFT_AND_RIGHT_TURN;
 		break;
 	default:
-	#ifdef DEBUG
-			Serial.print("	Error: LineFinder::find() return is not in the enumeration.");
-	#endif
+#ifdef DEBUG
+		Serial.print("	Error: LineFinder::find() return is not in the enumeration.");
+#endif
 		break;
 	}
 	correctPID(baseError);
@@ -226,7 +224,7 @@ void Robot::correctPID(int baseError)
 
 	P = error;
 	I = I + error;
-	D = error-lastError;
-	_correct = (Kp*P) + (Ki*I) + (Kd*D);
+	D = error - lastError;
+	_correct = (Kp * P) + (Ki * I) + (Kd * D);
 	lastError = error;
 }

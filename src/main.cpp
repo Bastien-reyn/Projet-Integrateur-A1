@@ -42,7 +42,7 @@ void setup()
 
 #ifdef Sender
     time = millis();
-    theMap = new Map('A', '8');
+    theMap = new Map('C', 6,'G',2);
     Serial.println("");
     Serial.println(millis() - time);
     theMap->getTravel();
@@ -96,7 +96,7 @@ void loop()
             stop();
         }
 
-        state = robot->takeTurn(nextDirection);
+        robot->takeTurn(nextDirection,sender,theMap->getPos());
         lastTurn = millis();
         nextDirection = theMap->nextDirection();
     }
@@ -127,9 +127,7 @@ void stop()
     sender -> send(message2);
     sender -> send(message3);
     Serial.println("STOOOOOOOOOOOOOOOOOOOOOOOP");
-    while (1)
-    {
-        robot->motorDriverMove(0, 0);
-    }
+    while (1);
+    
     #endif
 }

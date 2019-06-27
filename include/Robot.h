@@ -5,6 +5,7 @@
 #include "Grove_I2C_Motor_Driver.h"
 #include "util.h"
 #include "LineFinder.h"
+#include "RadioSender.h"
 
 
 typedef enum {
@@ -33,7 +34,7 @@ public:
     Robot();
     void correct(int correction);
     ERobotState followLine();
-    ERobotState takeTurn(ERobotState state);
+    void takeTurn(ERobotState state,RadioSender *sender,String pos);
     void motorDriverMove(int left, int right);
     ERobotState followCenterLinePID(ECatchLine state);
     void correctPID(int);
